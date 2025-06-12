@@ -169,6 +169,62 @@
         .status-rejected { background-color: #ffebee; color: #c62828; }
         .status-pending { background-color: #fff3e0; color: #ef6c00; }
 
+        .action-button {
+            padding: 10px 20px;
+            background-color: #002642;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            opacity: 1;
+        }
+
+        .action-button:hover {
+            background-color: #004d8c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            opacity: 1;
+        }
+
+        .action-button i {
+            font-size: 1.1em;
+        }
+
+        .cambiar-estado-btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            background-color: #1976d2;
+            color: white;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            opacity: 1;
+        }
+
+        .cambiar-estado-btn:hover {
+            background-color: #1565c0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            opacity: 1;
+        }
+
+        .cambiar-estado-btn i {
+            font-size: 1em;
+        }
+
         .back-button {
             display: inline-block;
             padding: 8px 16px;
@@ -181,22 +237,6 @@
         }
 
         .back-button:hover {
-            background-color: #004d8c;
-        }
-
-        .action-button {
-            padding: 8px 16px;
-            background-color: #002642;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            text-decoration: none;
-            font-size: 0.9em;
-            transition: background-color 0.3s ease;
-        }
-
-        .action-button:hover {
             background-color: #004d8c;
         }
 
@@ -214,38 +254,29 @@
             margin-bottom: 1rem;
         }
 
-        /* Estilos para el modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.4);
-        }
-
+        /* Estilos simplificados */
         .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 500px;
-            border-radius: 8px;
+            max-width: 400px;
+            margin: 1rem auto;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            background-color: #ffffff;
         }
 
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
+        .modal-header {
+            padding: 0.75rem;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
         }
 
-        .close:hover {
-            color: black;
+        .modal-header h3 {
+            font-size: 1rem;
+            margin: 0;
+            color: #333;
+        }
+
+        form {
+            padding: 1rem;
         }
 
         .form-group {
@@ -253,60 +284,109 @@
         }
 
         .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #002642;
-            font-weight: 500;
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.25rem;
         }
 
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 8px;
+        .form-control {
+            padding: 0.5rem;
+            font-size: 0.9rem;
             border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
+            border-radius: 3px;
         }
 
-        .form-group textarea {
-            min-height: 100px;
+        .form-control:focus {
+            border-color: #80bdff;
+            outline: none;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .file-upload-container {
+            border: 1px solid #ddd;
+            padding: 0.5rem;
+            border-radius: 3px;
+        }
+
+        .form-text {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 0.25rem;
+        }
+
+        .modal-footer {
+            padding: 0.75rem;
+            border-top: 1px solid #dee2e6;
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 0.4rem 0.75rem;
+            font-size: 0.9rem;
+            border-radius: 3px;
+            background: #fff;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: #007bff !important;
+            color: #fff !important;
+            border: none !important;
+            opacity: 1 !important;
+        }
+
+        .btn-primary:hover {
+            background: #0056b3 !important;
+        }
+
+        .btn-secondary {
+            background: #6c757d !important;
+            color: #fff !important;
+            border: none !important;
+            opacity: 1 !important;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268 !important;
+        }
+
+        .close-button {
+            font-size: 1.1rem;
+            color: #666;
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        textarea.form-control {
+            min-height: 80px;
             resize: vertical;
         }
 
-        .submit-button {
-            background-color: #002642;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1rem;
+        /* Estilos del modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
             width: 100%;
-            margin-top: 1rem;
-        }
-
-        .submit-button:hover {
-            background-color: #004d8c;
-        }
-
-        .comment-badge {
-            background-color: #e3f2fd;
-            color: #1976d2;
-            padding: 6px 12px;
-            border-radius: 4px;
-            font-size: 0.9em;
-            display: inline-block;
-            max-width: 200px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .no-comment {
-            color: #757575;
-            font-style: italic;
-            font-size: 0.9em;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
         }
     </style>
 </head>
@@ -348,7 +428,7 @@
     </nav>
 
     <div class="main-content">
-        <a th:href="@{/docente-supervisor}" class="back-button">
+        <a th:href="@{/docente-supervisor/dashboard}" class="back-button">
             <i class="fas fa-arrow-left"></i> Volver
         </a>
 
@@ -405,7 +485,11 @@
                                   class="no-comment">Sin comentarios</span>
                         </td>
                         <td>
-                            <button class="action-button" th:onclick="'cambiarEstadoActividad(' + ${actividad.actividadId.numero} + ')'">
+                            <button class="cambiar-estado-btn"
+                                    th:data-actividad-id="${actividad.actividadId.numero}"
+                                    th:data-plan-numero="${actividad.actividadId.planDeTrabajoId.numero}"
+                                    th:data-proyecto-cuit="${actividad.actividadId.planDeTrabajoId.proyectoId.cuitEntidad}"
+                                    th:data-proyecto-titulo="${actividad.actividadId.planDeTrabajoId.proyectoId.titulo}">
                                 <i class="fas fa-edit"></i> Cambiar Estado
                             </button>
                         </td>
@@ -462,7 +546,8 @@
                                   class="no-comment">Sin comentarios</span>
                         </td>
                         <td>
-                            <button class="action-button" th:onclick="'cambiarEstadoEntrega(' + ${entrega.id} + ')'">
+                            <button class="cambiar-estado-btn"
+                                    th:onclick="cambiarEstadoEntrega([[${entrega.id}]], '[[${proyecto.proyectoId.cuitEntidad}]]', '[[${proyecto.proyectoId.titulo}]]')">
                                 <i class="fas fa-edit"></i> Cambiar Estado
                             </button>
                         </td>
@@ -478,27 +563,68 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="info-section">
+            <h3>Informes</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Número</th>
+                        <th>Título</th>
+                        <th>Descripción</th>
+                        <th>Fecha</th>
+                        <th>Archivo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="informe : ${informes}">
+                        <td th:text="${informe.id.numero}">1</td>
+                        <td th:text="${informe.titulo}">Título del Informe</td>
+                        <td th:text="${informe.descripcion}">Descripción del Informe</td>
+                        <td th:text="${#temporals.format(informe.fecha, 'dd/MM/yyyy')}">Fecha</td>
+                        <td>
+                            <a th:if="${informe.rutaArchivo != null}"
+                               th:href="@{/docente-supervisor/descargarInforme/{numero}/{estudianteDni}/{actividadNumero}/{planNumero}/{proyectoTitulo}/{proyectoCuit}(numero=${informe.id.numero}, estudianteDni=${informe.id.estudianteDni}, actividadNumero=${informe.actividad.actividadId.numero}, planNumero=${informe.actividad.actividadId.planDeTrabajoId.numero}, proyectoTitulo=${informe.actividad.actividadId.planDeTrabajoId.proyectoId.titulo}, proyectoCuit=${informe.actividad.actividadId.planDeTrabajoId.proyectoId.cuitEntidad})}"
+                               class="btn small">
+                                <i class="fas fa-download"></i> Descargar
+                            </a>
+                            <span th:unless="${informe.rutaArchivo != null}" class="no-file">Sin archivo</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <!-- Modal para cambiar estado de actividad -->
     <div id="modalActividad" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h3>Cambiar Estado de Actividad</h3>
-                <button class="close-button" onclick="cerrarModal('modalActividad')">&times;</button>
+            <div class="modal-header bg-primary text-white">
+                <h3 class="mb-0">Cambiar Estado de Actividad</h3>
+                <button class="close-button text-white" onclick="cerrarModal('modalActividad')">&times;</button>
             </div>
-            <form id="formActividad" th:action="@{/docente-supervisor/cambiar-estado-actividad}" method="post">
+            <form id="formActividad" th:action="@{/docente-supervisor/cambiar-estado-actividad}" method="post" class="p-4">
                 <input type="hidden" id="actividadId" name="actividadId">
-                <select id="estadoActividad" name="estado" class="status-select">
-                    <option value="EN_REVISION">En Revisión</option>
-                    <option value="EN_CURSO">En Curso</option>
-                    <option value="COMPLETADA">Completada</option>
-                    <option value="RECHAZADA">Rechazada</option>
-                </select>
-                <textarea id="comentarioActividad" name="comentario" class="comment-textarea" placeholder="Comentarios (opcional)"></textarea>
-                <div class="modal-footer">
-                    <button type="button" class="btn-secondary" onclick="cerrarModal('modalActividad')">Cancelar</button>
-                    <button type="submit" class="btn-primary">Guardar Cambios</button>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <input type="hidden" id="planNumeroActividad" name="planNumero">
+                <input type="hidden" id="proyectoCuitActividad" name="proyectoCuit">
+                <input type="hidden" id="proyectoTituloActividad" name="proyectoTitulo">
+                <div class="form-group mb-3">
+                    <label for="estadoActividad" class="form-label fw-bold">Estado</label>
+                    <select id="estadoActividad" name="estado" class="form-select">
+                        <option value="EN_REVISION">En Revisión</option>
+                        <option value="EN_CURSO">En Curso</option>
+                        <option value="COMPLETADA">Completada</option>
+                        <option value="RECHAZADA">Rechazada</option>
+                    </select>
+                </div>
+                <div class="form-group mb-4">
+                    <label for="comentarioActividad" class="form-label fw-bold">Comentarios</label>
+                    <textarea id="comentarioActividad" name="comentario" class="form-control" rows="4" placeholder="Ingrese sus comentarios aquí..."></textarea>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-secondary" onclick="cerrarModal('modalActividad')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                 </div>
             </form>
         </div>
@@ -513,13 +639,22 @@
             </div>
             <form id="formEntrega" th:action="@{/docente-supervisor/cambiar-estado-entrega}" method="post">
                 <input type="hidden" id="entregaId" name="entregaId">
-                <select id="estadoEntrega" name="estado" class="status-select">
-                    <option value="PENDIENTE">Pendiente</option>
-                    <option value="ENTREGADO">Entregado</option>
-                    <option value="APROBADO">Aprobado</option>
-                    <option value="RECHAZADO">Rechazado</option>
-                </select>
-                <textarea id="comentarioEntrega" name="comentario" class="comment-textarea" placeholder="Comentarios (opcional)"></textarea>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <input type="hidden" id="proyectoCuitEntrega" name="proyectoCuit">
+                <input type="hidden" id="proyectoTituloEntrega" name="proyectoTitulo">
+                <div class="form-group">
+                    <label for="estadoEntrega">Estado</label>
+                    <select id="estadoEntrega" name="estado" class="status-select">
+                        <option value="PENDIENTE">Pendiente</option>
+                        <option value="ENTREGADO">Entregado</option>
+                        <option value="APROBADO">Aprobado</option>
+                        <option value="RECHAZADO">Rechazado</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="comentarioEntrega">Comentarios</label>
+                    <textarea id="comentarioEntrega" name="comentario" class="comment-textarea" placeholder="Ingrese sus comentarios aquí..."></textarea>
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn-secondary" onclick="cerrarModal('modalEntrega')">Cancelar</button>
                     <button type="submit" class="btn-primary">Guardar Cambios</button>
@@ -531,68 +666,143 @@
     <!-- Modal para crear actividad -->
     <div id="createActivityModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeCreateActivityModal()">&times;</span>
-            <h3>Crear Nueva Actividad</h3>
+            <div class="modal-header bg-primary text-white">
+                <h3 class="mb-0">Crear Nueva Actividad</h3>
+                <button class="close-button text-white" onclick="closeCreateActivityModal()">&times;</button>
+            </div>
             <form th:action="@{/docente-supervisor/proyecto/{cuit}/{titulo}/actividad/crear(cuit=${proyecto.proyectoId.cuitEntidad},titulo=${proyecto.proyectoId.titulo})}" 
                   method="POST" 
-                  enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="nombre">Nombre de la Actividad</label>
-                    <input type="text" id="nombre" name="nombre" required>
+                  enctype="multipart/form-data"
+                  class="p-4">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                
+                <div class="form-group mb-3">
+                    <label for="nombre" class="form-label fw-bold">Nombre de la Actividad</label>
+                    <input type="text" id="nombre" name="nombre" class="form-control" required>
                 </div>
-                <div class="form-group">
-                    <label for="descripcion">Descripción</label>
-                    <textarea id="descripcion" name="descripcion" required></textarea>
+                
+                <div class="form-group mb-3">
+                    <label for="descripcion" class="form-label fw-bold">Descripción</label>
+                    <textarea id="descripcion" name="descripcion" class="form-control" rows="4" required></textarea>
                 </div>
-                <div class="form-group">
-                    <label for="horas">Horas Estimadas</label>
-                    <input type="number" id="horas" name="horas" min="0" required>
+                
+                <div class="form-group mb-3">
+                    <label for="cantidadHoras" class="form-label fw-bold">Cantidad de Horas</label>
+                    <input type="number" id="cantidadHoras" name="cantidadHoras" class="form-control" min="1" required>
                 </div>
-                <div class="form-group">
-                    <label for="fechaLimite">Fecha Límite</label>
-                    <input type="date" id="fechaLimite" name="fechaLimite" required 
-                           th:min="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}"
-                           th:value="${#temporals.format(#temporals.createNow().plusDays(7), 'yyyy-MM-dd')}">
+                
+                <div class="form-group mb-4">
+                    <label for="archivo" class="form-label fw-bold">Archivo de la Actividad</label>
+                    <div class="input-group">
+                        <input type="file" id="archivo" name="archivo" class="form-control" accept=".pdf,.doc,.docx,.txt">
+                        <span class="input-group-text">Formatos: PDF, DOC, DOCX, TXT</span>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="archivo">Archivo de la Actividad</label>
-                    <input type="file" id="archivo" name="archivo" accept=".pdf,.doc,.docx,.txt">
-                    <small class="form-text text-muted">Formatos permitidos: PDF, DOC, DOCX, TXT</small>
+                
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-secondary" onclick="closeCreateActivityModal()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>Crear Actividad
+                    </button>
                 </div>
-                <button type="submit" class="submit-button">Crear Actividad</button>
             </form>
         </div>
     </div>
 
     <script>
-        function cambiarEstadoActividad(actividadId) {
+        document.addEventListener('DOMContentLoaded', function() {
+            // Agregar event listeners a los botones de cambiar estado
+            document.querySelectorAll('.cambiar-estado-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const actividadId = this.getAttribute('data-actividad-id');
+                    const planNumero = this.getAttribute('data-plan-numero');
+                    const proyectoCuit = this.getAttribute('data-proyecto-cuit');
+                    const proyectoTitulo = this.getAttribute('data-proyecto-titulo');
+                    
+                    cambiarEstadoActividad(actividadId, planNumero, proyectoCuit, proyectoTitulo);
+                });
+            });
+
+            // Agregar event listener para cerrar el modal al hacer clic fuera
+            window.onclick = function(event) {
+                if (event.target.className === 'modal') {
+                    event.target.style.display = 'none';
+                }
+            }
+        });
+
+        function cambiarEstadoActividad(actividadId, planNumero, proyectoCuit, proyectoTitulo) {
+            console.log('Parámetros recibidos:', {actividadId, planNumero, proyectoCuit, proyectoTitulo});
+            
+            if (!actividadId || !planNumero || !proyectoCuit || !proyectoTitulo) {
+                console.error('Faltan parámetros requeridos');
+                return;
+            }
+
+            // Asegurarse de que proyectoCuit sea un número
+            proyectoCuit = parseInt(proyectoCuit);
+            if (isNaN(proyectoCuit)) {
+                console.error('El CUIT debe ser un número válido');
+                return;
+            }
+
+            // Establecer los valores en el formulario
             document.getElementById('actividadId').value = actividadId;
+            document.getElementById('planNumeroActividad').value = planNumero;
+            document.getElementById('proyectoCuitActividad').value = proyectoCuit;
+            document.getElementById('proyectoTituloActividad').value = proyectoTitulo;
+
+            // Limpiar el formulario antes de mostrar el modal
+            document.getElementById('estadoActividad').value = 'EN_REVISION';
+            document.getElementById('comentarioActividad').value = '';
+
+            // Mostrar el modal
             document.getElementById('modalActividad').style.display = 'block';
         }
 
-        function cambiarEstadoEntrega(entregaId) {
+        function cambiarEstadoEntrega(entregaId, proyectoCuit, proyectoTitulo) {
             document.getElementById('entregaId').value = entregaId;
+            document.getElementById('proyectoCuitEntrega').value = proyectoCuit;
+            document.getElementById('proyectoTituloEntrega').value = proyectoTitulo;
             document.getElementById('modalEntrega').style.display = 'block';
         }
 
         function cerrarModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'none';
+                // Limpiar el formulario si es el modal de actividad
+                if (modalId === 'modalActividad') {
+                    document.getElementById('formActividad').reset();
+                }
+            }
         }
 
+        // Función para abrir el modal de crear actividad
         function openCreateActivityModal() {
             document.getElementById('createActivityModal').style.display = 'block';
         }
 
+        // Función para cerrar el modal de crear actividad
         function closeCreateActivityModal() {
             document.getElementById('createActivityModal').style.display = 'none';
         }
 
-        // Cerrar modal al hacer clic fuera de él
+        // Cerrar el modal al hacer clic fuera de él
         window.onclick = function(event) {
-            if (event.target.className === 'modal') {
-                event.target.style.display = 'none';
+            const modal = document.getElementById('createActivityModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
             }
         }
+
+        // Asegurarse de que el modal esté cerrado al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('createActivityModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>

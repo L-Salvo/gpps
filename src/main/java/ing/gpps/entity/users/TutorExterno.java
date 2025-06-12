@@ -1,4 +1,5 @@
 package ing.gpps.entity.users;
+
 //imports de notificaciones
 import ing.gpps.notificaciones.NotificacionesService;
 import ing.gpps.notificaciones.Notificar;
