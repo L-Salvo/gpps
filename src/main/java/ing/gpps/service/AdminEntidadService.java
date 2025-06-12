@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AdminEntidadService {
@@ -265,6 +266,45 @@ public class AdminEntidadService {
     public void verEstructuraProyecto() { //TODO: MUESTRA TODA LA INFORMACIÓN DEL PROYECTO
 
     }
+
+    public void eliminarTutor(Long idTutor, Long cuitEntidad) {
+        TutorExterno tutor = tutorRepository.findById(idTutor)
+                .orElseThrow(() -> new EntityNotFoundException("Tutor no encontrado con ID: " + idTutor));
+
+        if (!tutor.getEntidad().getCuit().equals(cuitEntidad)) {
+            throw new IllegalArgumentException("No puede eliminar tutores de otra entidad.");
+        }
+
+        if (!tutor.getProyectos().isEmpty()) {
+            throw new IllegalArgumentException("El tutor no puede ser eliminado porque está asociado a proyectos.");
+        }
+
+        tutorRepository.delete(tutor);
+    }
+
+    public void eliminarProyecto(String tituloProyecto, Long cuitEntidad){
+        ProyectoId proyectoId = new ProyectoId(tituloProyecto, cuitEntidad);
+        Proyecto proyecto = proyectoRepository.findByProyectoId(proyectoId)
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró el proyecto con título " + tituloProyecto + " y cuit " + cuitEntidad));
+
+        if (proyecto.getPlanDeTrabajo() != null) {
+            throw new IllegalArgumentException("El proyecto no puede ser eliminado porque tiene planes de trabajo asociados.");
+        }
+
+        proyectoRepository.delete(proyecto);
+    }
+
+    public void eliminarPlanDeTrabajo(int numeroPlan, String tituloProyecto, Long cuitEntidad) {
+        ProyectoId proyectoId = new ProyectoId(tituloProyecto, cuitEntidad);
+        PlanDeTrabajoId planId = new PlanDeTrabajoId(numeroPlan, proyectoId);
+
+        PlanDeTrabajo plan = planDeTrabajoRepository.findById(planId)
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró el plan de trabajo con número " + numeroPlan + " para el proyecto " + tituloProyecto));
+
+
+        planDeTrabajoRepository.delete(plan); //verificar si también elimina todas las actividades asociadas
+    }
+
 
     private void validarCamposTexto(String texto) {
         if (texto == null || texto.isEmpty()) {

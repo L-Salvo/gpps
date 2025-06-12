@@ -53,6 +53,7 @@ public class EstudianteController {
     private final InformeService informeService;
     private final FileStorageService fileStorageService;
     private final EstudianteService estudianteService;
+    private final NotificacionVisualService notificacionVisualService;
 
     private static final Logger logger = LoggerFactory.getLogger(EstudianteController.class);
 
@@ -66,7 +67,8 @@ public class EstudianteController {
                               ActividadService actividadService,
                               InformeService informeService,
                               FileStorageService fileStorageService,
-                              EstudianteService estudianteService) {
+                              EstudianteService estudianteService,
+                              NotificacionVisualService notificacionVisualService) {
         this.usuarioService = usuarioService;
         this.proyectoService = proyectoService;
         this.entregaService = entregaService;
@@ -74,6 +76,7 @@ public class EstudianteController {
         this.informeService = informeService;
         this.fileStorageService = fileStorageService;
         this.estudianteService = estudianteService;
+        this.notificacionVisualService = notificacionVisualService;
     }
 
     @GetMapping("/dashboard")
@@ -461,10 +464,32 @@ public class EstudianteController {
 
             // Guardar la entrega
             entregaService.crearEntrega(entrega);
+
             logger.info("Entrega creada exitosamente para la actividad: {}", actividad.getNombre());
 
-            return "success";
+            // Notificar automáticamente al DocenteSupervisor y TutorExterno
+            Usuario emisor = estudiante;
+            Usuario tutorInterno = proyecto.getTutorUNRN();
+            Usuario tutorExterno = proyecto.getTutorExterno();
 
+            String mensaje = "El estudiante " + estudiante.getNombre() + " ha subido una entrega para la actividad '" + actividad.getNombre() + "'.";
+            String tipo = "DOCUMENTO_SUBIDO";
+
+            if (tutorInterno != null && tutorInterno.getId() != null) {
+                notificacionVisualService.crearNotificacion(emisor, tutorInterno, mensaje, tipo);
+                logger.info("Notificación enviada al tutor interno: {}", tutorInterno.getNombre());
+            } else {
+                logger.warn("⚠️ El tutor interno del estudiante {} es null o no tiene ID", estudiante.getNombre());
+            }
+
+            if (tutorExterno != null && tutorExterno.getId() != null) {
+                notificacionVisualService.crearNotificacion(emisor, tutorExterno, mensaje, tipo);
+                logger.info("Notificación enviada al tutor externo: {}", tutorExterno.getNombre());
+            } else {
+                logger.warn("⚠️ El tutor externo del estudiante {} es null o no tiene ID", estudiante.getNombre());
+            }
+
+            return "success";
         } catch (Exception e) {
             logger.error("Error al subir la entrega: " + e.getMessage(), e);
             return "error: " + e.getMessage();

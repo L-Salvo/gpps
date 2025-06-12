@@ -1,5 +1,6 @@
 package ing.gpps.controller;
 
+import ing.gpps.dto.NotificacionDTO;
 import ing.gpps.entity.users.Usuario;
 import ing.gpps.notificaciones.Notificacion;
 
@@ -23,8 +24,7 @@ public class NotificacionController {
     @Autowired
     private NotificacionVisualService notificacionService;
 
-    //Obtener todas las notificaciones del usuario actial
-
+    //Obtener todas las notificaciones del usuario actual
     @GetMapping("/usuario")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> getNotificacionesUsuario(){
@@ -35,8 +35,8 @@ public class NotificacionController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Usuario no autenticado o no encontrado."));
             }
 
-            List<Notificacion> notificaciones = notificacionService.getNotificacionesPorUsuario(Long.valueOf (usuario.getId()));
-            long noLeidas = notificacionService.contarNotificacionesNoLeidas(Long.valueOf (usuario.getId()));
+            List<NotificacionDTO> notificaciones = notificacionService.getNotificacionesPorUsuario(Long.valueOf(usuario.getId()));
+            long noLeidas = notificacionService.contarNotificacionesNoLeidas(Long.valueOf(usuario.getId()));
 
             Map<String, Object> response = new HashMap<>();
             response.put("notificaciones", notificaciones);

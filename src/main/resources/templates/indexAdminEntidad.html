@@ -935,9 +935,11 @@
                         <button class="btn small edit-user-btn" th:attr="data-id=${tutor.id}">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <button class="btn small">
+                        <a class="btn small"
+                           th:href="@{/admin-entidad/eliminarTutor(cuitTutor=${tutor.id})}"
+                           onclick="return confirm('¿Estás seguro de eliminar el tutor?');">
                             <i class="fas fa-trash-alt"></i>
-                        </button>
+                        </a>
                     </td>
                 </tr>
                 </tbody>
@@ -1028,9 +1030,12 @@
                         <button class="btn small edit-user-btn" th:attr="data-id=${proyecto.proyectoId.titulo}">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <button class="btn small">
+                        <a class="btn small"
+                           th:href="@{/admin-entidad/eliminarProyecto(tituloProyecto=${proyecto.proyectoId.titulo}, cuitEntidad=${proyecto.proyectoId.cuitEntidad})}"
+                           onclick="return confirm('¿Estás seguro de eliminar este proyecto?');">
                             <i class="fas fa-trash-alt"></i>
-                        </button>
+                        </a>
+
                     </td>
                 </tr>
                 </tbody>
@@ -1154,9 +1159,15 @@
                         <button class="btn small edit-plan-btn" th:attr="data-plan-id=${plan.planDeTrabajoId.numero}">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <button class="btn small delete-plan-btn" th:attr="data-plan-id=${plan.planDeTrabajoId.numero}">
+                        <a class="btn small"
+                           th:href="@{/admin-entidad/eliminarPlanDeTrabajo(
+                               numeroPlan=${plan.planDeTrabajoId.numero},
+                               tituloProyecto=${plan.planDeTrabajoId.proyectoId.titulo},
+                               cuitEntidad=${plan.planDeTrabajoId.proyectoId.cuitEntidad}
+                           )}"
+                           onclick="return confirm('¿Estás seguro de eliminar este plan de trabajo?');">
                             <i class="fas fa-trash-alt"></i>
-                        </button>
+                        </a>
                     </td>
                 </tr>
 
@@ -1238,6 +1249,14 @@
                             <option th:each="a : ${areas}" th:value="${a.nombre}" th:text="${a.nombre}"></option>
                         </select>
                     </div>
+
+<!--                    <div class="form-group">-->
+<!--                        <label for="estado">Estado:</label>-->
+<!--                        <select id="estado" th:field="*{estado}" required>-->
+<!--                            <option value="" disabled selected>Seleccioná un estado</option>-->
+<!--                            <option th:each="e : ${estados}" th:value="${e}" th:text="${e.label}"></option>-->
+<!--                        </select>-->
+<!--                    </div>-->
 
                     <div class="form-group">
                         <label for="tutorExterno">Tutor:</label>
