@@ -798,22 +798,27 @@
             <div class="profile-menu">
                 <span>Perfil: Estudiante</span>
                 <div class="notification-container">
-    <span class="notification-icon">
-        <i class="fas fa-bell"></i>
-        <span class="notification-badge" id="notificacion-count" style="display:none;">0</span>
-    </span>
-                    <div class="notification-dropdown" id="notification-dropdown" style="display: none;">
-                        <div id="notificacion-lista" class="notificacion-lista">
-                            <p style="text-align:center; padding: 10px;">Cargando notificaciones...</p>
-                        </div>
-                        <div class="notificacion-footer">
-                            <button class="btn secondary" onclick="marcarTodasLeidas()">Marcar todas como leídas</button>
+                    <div class="notification-icon" style="position: relative; cursor: pointer;">
+                        <i class="fas fa-bell"></i>
+                        <span id="notificacion-count" style="
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: red;
+        color: white;
+        border-radius: 50%;
+        padding: 2px 6px;
+        font-size: 12px;
+        display: none;">0</span>
+                    </div>
+
+                    <div id="notification-dropdown" class="dropdown-content" style="display:none; position:absolute; right:0; top:100%; background:white; border:1px solid #ccc; width:300px; max-height:400px; overflow-y:auto; box-shadow:0px 2px 10px rgba(0,0,0,0.1); z-index:100;">
+                        <div id="notificacion-lista" style="padding:10px;">
+                            <!-- Aquí se llenan las notificaciones dinámicamente -->
                         </div>
                     </div>
+
                 </div>
-
-
-            </div>
         </div>
     </nav>
 
@@ -1279,6 +1284,47 @@
             // Mostrar el modal
             document.getElementById('modalInforme').style.display = 'block';
         }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const icon = document.querySelector(".notification-icon");
+            const dropdown = document.getElementById("notification-dropdown");
+            const lista = document.getElementById("notificacion-lista");
+            const contador = document.getElementById("notificacion-count");
+
+            icon.addEventListener("click", async () => {
+                dropdown.classList.toggle("show");
+
+                try {
+                    const res = await fetch("/api/notificaciones/usuario");
+                    const data = await res.json();
+
+                    lista.innerHTML = "";
+                    data.notificaciones.forEach(n => {
+                        const item = document.createElement("div");
+                        item.className = "notificacion-item" + (n.leida ? "" : " unread");
+                        item.innerHTML = `
+                            <i class="${n.iconoTipo}"></i>
+                            <div>
+                                <strong>${n.tipo.replace(/_/g, ' ')}</strong><br>
+                                <span>${n.mensaje}</span><br>
+                                <small>${n.fechaCreacionFormateada}</small>
+                            </div>
+                        `;
+                        lista.appendChild(item);
+                    });
+
+                    if (data.noLeidas > 0) {
+                        contador.style.display = "inline-block";
+                        contador.textContent = data.noLeidas;
+                    } else {
+                        contador.style.display = "none";
+                    }
+                } catch (error) {
+                    console.error("Error al cargar notificaciones:", error);
+                }
+            });
+        });
     </script>
 
 </body>

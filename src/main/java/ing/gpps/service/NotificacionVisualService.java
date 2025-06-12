@@ -1,5 +1,6 @@
 package ing.gpps.service;
 
+import ing.gpps.dto.NotificacionDTO;
 import ing.gpps.entity.users.Usuario;
 import ing.gpps.notificaciones.Notificacion;
 import ing.gpps.repository.NotificacionRepository;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -26,41 +28,45 @@ public class NotificacionVisualService {
     private UsuarioRepository usuarioRepository;
 
     //Crear una nueva notificación
-    public Notificacion crearNotificacion(Usuario emisor, Usuario destinatario, String mensaje, String tipo) {
+    public NotificacionDTO crearNotificacion(Usuario emisor, Usuario destinatario, String mensaje, String tipo) {
         Notificacion notificacion = new Notificacion();
         notificacion.setEmisor(emisor);
         notificacion.setDestinatario(destinatario);
+        notificacion.setUsuario(destinatario);
         notificacion.setMensaje(mensaje);
         notificacion.setTipo(tipo);
         notificacion.setFechaCreacion(LocalDateTime.now());
         notificacion.setLeida(false);
 
-        return notificacionRepository.save(notificacion);
+        return NotificacionDTO.fromEntity(notificacionRepository.save(notificacion));
     }
 
     //Obtener todas las notificaciones de un usuario ordenadas por fecha
-    public List<Notificacion> getNotificacionesPorUsuario(Long usuarioId) {
+    public List<NotificacionDTO> getNotificacionesPorUsuario(Long usuarioId) {
         return getNotificacionesPorUsuario(usuarioId, 50); // Limitar a 50 por defecto
     }
 
     // Obtener notificaciones de un usuario con límite
-    public List<Notificacion> getNotificacionesPorUsuario(Long usuarioId, int limite) {
+    public List<NotificacionDTO> getNotificacionesPorUsuario(Long usuarioId, int limite) {
         Pageable pageable = PageRequest.of(0, limite, Sort.by("fechaCreacion").descending());
-        return notificacionRepository.findByDestinatarioIdOrderByFechaCreacionDesc(usuarioId, pageable);
+        return notificacionRepository.findByDestinatarioIdOrderByFechaCreacionDesc(usuarioId, pageable)
+                .stream()
+                .map(NotificacionDTO::fromEntity)
+                .collect(Collectors.toList());
     }
 
     //Obtener solo las notificaciones no leídas de un usuario
-
-    public List<Notificacion> getNotificacionesNoLeidas(Long usuarioId) {
-        return notificacionRepository.findByDestinatarioIdAndLeidaFalseOrderByFechaCreacionDesc(usuarioId);
+    public List<NotificacionDTO> getNotificacionesNoLeidas(Long usuarioId) {
+        return notificacionRepository.findByDestinatarioIdAndLeidaFalseOrderByFechaCreacionDesc(usuarioId)
+                .stream()
+                .map(NotificacionDTO::fromEntity)
+                .collect(Collectors.toList());
     }
-
 
     //Contar notificaciones no leídas
     public long contarNotificacionesNoLeidas(Long usuarioId) {
         return notificacionRepository.countByDestinatarioIdAndLeidaFalse(usuarioId);
     }
-
 
     //Marcar una notificación como leída
     public boolean marcarComoLeida(Long notificacionId, Long usuarioId) {
@@ -82,11 +88,10 @@ public class NotificacionVisualService {
         return false;
     }
 
-
     //Marcar todas las notificaciones de un usuario como leídas
     public int marcarTodasComoLeidas(Long usuarioId) {
         try {
-            List<Notificacion> noLeidas = getNotificacionesNoLeidas(usuarioId);
+            List<Notificacion> noLeidas = notificacionRepository.findByDestinatarioIdAndLeidaFalseOrderByFechaCreacionDesc(usuarioId);
             int contador = 0;
             LocalDateTime ahora = LocalDateTime.now();
 
