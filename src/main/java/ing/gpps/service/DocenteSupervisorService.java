@@ -15,9 +15,15 @@ import ing.gpps.repository.ActividadRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -29,6 +35,9 @@ public class DocenteSupervisorService {
     private final ProyectoRepository proyectoRepository;
     private final EntregaRepository entregaRepository;
     private final ActividadRepository actividadRepository;
+
+    @Value("${app.upload.path}")
+    private String uploadPath;
 
     @Autowired
     public DocenteSupervisorService(ProyectoRepository proyectoRepository, 
@@ -151,20 +160,41 @@ public class DocenteSupervisorService {
     }
 
     @Transactional
-    public void guardarActividad(Actividad actividad) {
-        if (actividad == null) {
-            return;
-        }
-        actividadRepository.save(actividad);
-    }
-
-    @Transactional(readOnly = true)
-    public Entrega getEntregaById(Long entregaId) {
-        return entregaRepository.findById(entregaId).orElse(null);
+    public Actividad guardarActividad(Actividad actividad) {
+        return actividadRepository.save(actividad);
     }
 
     @Transactional
     public Entrega guardarEntrega(Entrega entrega) {
         return entregaRepository.save(entrega);
+    }
+
+    @Transactional(readOnly = true)
+    public Entrega getEntregaById(Long id) {
+        return entregaRepository.findById(id).orElse(null);
+    }
+
+    @Transactional
+    public String guardarArchivoActividad(MultipartFile archivo, Actividad actividad) throws IOException {
+        // Crear la estructura de directorios
+        String proyectoPath = uploadPath + "/" + actividad.getPlanDeTrabajo().getProyecto().getProyectoId().getTitulo();
+        String actividadPath = proyectoPath + "/actividades";
+        Path proyectoDir = Paths.get(proyectoPath);
+        Path actividadDir = Paths.get(actividadPath);
+
+        // Crear los directorios si no existen
+        Files.createDirectories(actividadDir);
+
+        // Generar nombre único para el archivo
+        String originalFilename = archivo.getOriginalFilename();
+        String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+        String newFilename = "actividad_" + actividad.getActividadId().numero() + "_" + System.currentTimeMillis() + extension;
+
+        // Guardar el archivo
+        Path filePath = actividadDir.resolve(newFilename);
+        Files.copy(archivo.getInputStream(), filePath);
+
+        // Retornar la ruta relativa del archivo
+        return actividadPath + "/" + newFilename;
     }
 }

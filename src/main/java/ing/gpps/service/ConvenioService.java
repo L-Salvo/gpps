@@ -26,6 +26,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class ConvenioService {
@@ -39,6 +41,8 @@ public class ConvenioService {
     private Font normalFont;
     private Font boldFont;
 
+    private static final Logger logger = LoggerFactory.getLogger(ConvenioService.class);
+
     public ConvenioService(ConvenioRepository convenioRepository) {
         this.convenioRepository = convenioRepository;
         
@@ -50,6 +54,71 @@ public class ConvenioService {
             boldFont = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
         } catch (Exception e) {
             throw new RuntimeException("Error al inicializar fuentes del PDF: " + e.getMessage(), e);
+        }
+    }
+
+    private class HeaderFooterPageEvent extends PdfPageEventHelper {
+        private Image logoUNRN;
+
+        public HeaderFooterPageEvent() {
+            try {
+                // Intentar cargar la imagen desde una URL
+                String imageUrl = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-So2CHeud6JF1xVNp1LlSIuwt3sgVUg.png";
+                logger.info("Intentando cargar imagen desde URL: {}", imageUrl);
+                
+                // Crear una URL y obtener la imagen
+                java.net.URL url = new java.net.URL(imageUrl);
+                java.io.InputStream is = url.openStream();
+                byte[] imageBytes = is.readAllBytes();
+                is.close();
+                
+                // Crear la imagen desde los bytes
+                logoUNRN = Image.getInstance(imageBytes);
+                logoUNRN.scaleToFit(70, 70);
+                logger.info("Imagen cargada exitosamente");
+            } catch (Exception e) {
+                logger.error("Error al cargar el logo UNRN: " + e.getMessage(), e);
+                // Crear una imagen de respaldo o placeholder
+                try {
+                    logoUNRN = Image.getInstance(createPlaceholderImage());
+                    logoUNRN.scaleToFit(70, 70);
+                } catch (Exception ex) {
+                    logger.error("Error al crear imagen de respaldo: " + ex.getMessage(), ex);
+                }
+            }
+        }
+
+        private byte[] createPlaceholderImage() throws IOException {
+            // Crear una imagen simple de 100x100 píxeles
+            java.awt.image.BufferedImage image = new java.awt.image.BufferedImage(100, 100, java.awt.image.BufferedImage.TYPE_INT_RGB);
+            java.awt.Graphics2D g2d = image.createGraphics();
+            g2d.setColor(java.awt.Color.WHITE);
+            g2d.fillRect(0, 0, 100, 100);
+            g2d.setColor(java.awt.Color.BLACK);
+            g2d.drawRect(0, 0, 99, 99);
+            g2d.drawString("UNRN", 30, 50);
+            g2d.dispose();
+
+            // Convertir a bytes
+            java.io.ByteArrayOutputStream baos = new java.io.ByteArrayOutputStream();
+            javax.imageio.ImageIO.write(image, "PNG", baos);
+            return baos.toByteArray();
+        }
+
+        @Override
+        public void onEndPage(PdfWriter writer, Document document) {
+            try {
+                if (logoUNRN != null) {
+                    // Posicionar el logo en la esquina superior izquierda
+                    logoUNRN.setAbsolutePosition(36, document.getPageSize().getHeight() - 70);
+                    writer.getDirectContent().addImage(logoUNRN);
+                    logger.debug("Logo agregado exitosamente en la página");
+                } else {
+                    logger.error("El logo es null en onEndPage");
+                }
+            } catch (Exception e) {
+                logger.error("Error al agregar el logo en la cabecera: " + e.getMessage(), e);
+            }
         }
     }
 
@@ -75,14 +144,18 @@ public class ConvenioService {
             }
 
             // Crear el documento PDF
-            Document document = new Document(PageSize.A4, 36, 36, 36, 36); // left, right, top, bottom
+            Document document = new Document(PageSize.A4, 36, 36, 90, 36);
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(nombreArchivo));
+            
+            // Agregar el evento de página para el logo
+            writer.setPageEvent(new HeaderFooterPageEvent());
+            
             document.open();
 
             // Título del acta
             Paragraph docTitle = new Paragraph("ACTA ACUERDO\nSOBRE INSTANCIAS DE PRÁCTICAS PROFESIONALES SUPERVISADAS", titleFont);
             docTitle.setAlignment(Element.ALIGN_CENTER);
-            docTitle.setSpacingAfter(20);
+            docTitle.setSpacingBefore(10);
             document.add(docTitle);
 
             // Introducción

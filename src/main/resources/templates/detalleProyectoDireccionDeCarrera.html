@@ -287,9 +287,10 @@
     <div class="sub-header">
         <div class="propuesta">
             <span>Propuesta: </span>
+            <form id="logoutForm" th:action="@{/logout}" method="post" style="display:none;"></form>
             <select id="carreraSelect" title="Seleccionar carrera para ver sus postulantes">
                 <option value="">Dirección de Carrera</option>
-                <option value="logout">Logout</option>
+                <option value="logout">Cerrar sesión</option>
             </select>
         </div>
     </div>
@@ -299,7 +300,6 @@
             <div class="profile-menu">
                 <span><i class="fas fa-bell"></i></span>
                 <span class="icon-separator"></span>
-                <span>Perfil: Dirección de Carrera</span>
             </div>
         </div>
     </nav>
@@ -482,7 +482,7 @@
     <script>
         document.getElementById('carreraSelect').addEventListener('change', function() {
             if (this.value === 'logout') {
-                window.location.href = '/logout';
+                document.getElementById('logoutForm').submit();
             }
         });
     </script>

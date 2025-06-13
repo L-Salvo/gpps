@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 import java.util.Map;
@@ -47,7 +48,7 @@ import java.util.Optional;
 public class DocenteSupervisorController {
     private static final Logger logger = LoggerFactory.getLogger(DocenteSupervisorController.class);
 
-    @Value("${upload.path}")
+    @Value("${app.upload.path}")
     private String uploadPath;
 
     private final DocenteSupervisorService docenteSupervisorService;
@@ -177,30 +178,44 @@ public class DocenteSupervisorController {
 
     @PostMapping("/proyecto/{cuit}/{titulo}/actividad/crear")
     @Transactional
-    public String crearActividad(@PathVariable Long cuit,
+    public Object crearActividad(@PathVariable Long cuit,
                                @PathVariable String titulo,
-                               @ModelAttribute Actividad actividad,
-                               @RequestParam(value = "archivo", required = false) MultipartFile archivo) {
+                               @RequestParam String nombre,
+                               @RequestParam String descripcion,
+                               @RequestParam Integer horas,
+                               @RequestParam LocalDate fechaLimite,
+                               @RequestParam(value = "archivo", required = false) MultipartFile archivo,
+                               HttpServletRequest request) {
         try {
             logger.info("Recibida solicitud para crear actividad:");
             logger.info("  Cuit: {}", cuit);
             logger.info("  Titulo: {}", titulo);
-            logger.info("  Nombre de actividad: {}", actividad.getNombre());
-            logger.info("  Descripción de actividad: {}", actividad.getDescripcion());
-            logger.info("  Horas estimadas: {}", actividad.getHoras());
-            logger.info("  Fecha Límite: {}", actividad.getFechaLimite());
+            logger.info("  Nombre de actividad: {}", nombre);
+            logger.info("  Descripción de actividad: {}", descripcion);
+            logger.info("  Horas estimadas: {}", horas);
+            logger.info("  Fecha Límite: {}", fechaLimite);
             logger.info("  Archivo presente: {}", archivo != null && !archivo.isEmpty());
 
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             if (auth == null || !auth.isAuthenticated() || !(auth.getPrincipal() instanceof CustomUserDetails)) {
                 logger.warn("Intento de acceso no autorizado para crear actividad");
-                return "redirect:/login";
+                if (isAjax(request)) {
+                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(Map.of("success", false, "message", "No autorizado"));
+                } else {
+                    return "redirect:/login";
+                }
             }
 
             CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
             if (!(userDetails.getUsuario() instanceof DocenteSupervisor)) {
                 logger.warn("Usuario no autorizado intentando crear actividad: {}", userDetails.getUsername());
-                return "redirect:/login";
+                if (isAjax(request)) {
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body(Map.of("success", false, "message", "No tiene permisos para crear actividades"));
+                } else {
+                    return "redirect:/login";
+                }
             }
 
             DocenteSupervisor tutor = (DocenteSupervisor) userDetails.getUsuario();
@@ -208,7 +223,12 @@ public class DocenteSupervisorController {
 
             if (proyecto == null || proyecto.getTutorUNRN() == null || !proyecto.getTutorUNRN().getId().equals(tutor.getId())) {
                 logger.warn("Intento de crear actividad en proyecto no autorizado");
-                return "redirect:/docente-supervisor/dashboard";
+                if (isAjax(request)) {
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body(Map.of("success", false, "message", "No tiene permisos para crear actividades en este proyecto"));
+                } else {
+                    return "redirect:/docente-supervisor/dashboard";
+                }
             }
 
             PlanDeTrabajo planDeTrabajo = proyecto.getPlanDeTrabajo();
@@ -218,81 +238,78 @@ public class DocenteSupervisorController {
             }
 
             int numeroActividad = planDeTrabajo.getActividades().size() + 1;
-            Actividad actividadToSave = new Actividad(numeroActividad, actividad.getNombre(), actividad.getDescripcion(), planDeTrabajo, actividad.getHoras());
-            actividadToSave.setFechaLimite(actividad.getFechaLimite());
+            Actividad actividadToSave = new Actividad(numeroActividad, nombre, descripcion, planDeTrabajo, horas);
+            actividadToSave.setFechaLimite(fechaLimite);
 
             // Manejar la subida del archivo si existe
             if (archivo != null && !archivo.isEmpty()) {
-                try {
-                    // Crear la estructura de directorios
-                    String proyectoPath = uploadPath + "/" + titulo;
-                    String actividadPath = proyectoPath + "/actividades";
-                    Path proyectoDir = Paths.get(proyectoPath);
-                    Path actividadDir = Paths.get(actividadPath);
-
-                    // Crear los directorios si no existen
-                    Files.createDirectories(actividadDir);
-
-                    // Generar nombre único para el archivo
-                    String originalFilename = archivo.getOriginalFilename();
-                    String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
-                    String newFilename = "actividad_" + numeroActividad + "_" + System.currentTimeMillis() + extension;
-
-                    // Guardar el archivo
-                    Path filePath = actividadDir.resolve(newFilename);
-                    Files.copy(archivo.getInputStream(), filePath);
-
-                    // Guardar la ruta en la actividad
-                    actividadToSave.setRutaArchivo(actividadPath + "/" + newFilename);
-                } catch (IOException e) {
-                    logger.error("Error al guardar el archivo de la actividad: {}", e.getMessage());
-                    // Continuar con la creación de la actividad incluso si falla la subida del archivo
-                }
+                String rutaArchivo = docenteSupervisorService.guardarArchivoActividad(archivo, actividadToSave);
+                actividadToSave.setRutaArchivo(rutaArchivo);
             }
 
-            docenteSupervisorService.crearActividad(cuit.toString(), titulo, actividadToSave);
+            docenteSupervisorService.guardarActividad(actividadToSave);
 
-            return "redirect:/docente-supervisor/proyecto/" + cuit + "/" + titulo;
+            if (isAjax(request)) {
+                return ResponseEntity.ok(Map.of("success", true, "message", "Actividad creada exitosamente"));
+            } else {
+                return "redirect:/docente-supervisor/proyecto/" + cuit + "/" + titulo;
+            }
         } catch (Exception e) {
-            logger.error("Error al crear actividad: {}", e.getMessage(), e);
-            return "redirect:/error";
+            logger.error("Error al crear actividad: ", e);
+            if (request != null && isAjax(request)) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("success", false, "message", "Error al crear la actividad: " + e.getMessage()));
+            } else {
+                return "redirect:/error";
+            }
         }
     }
 
     @PostMapping("/cambiar-estado-actividad")
     @Transactional
-    public String cambiarEstadoActividad(@RequestParam int actividadId,
+    public ResponseEntity<?> cambiarEstadoActividad(@RequestParam int actividadId,
                                        @RequestParam int planNumero,
                                        @RequestParam String estado,
                                        @RequestParam(required = false) String comentario,
                                        @RequestParam Long proyectoCuit,
                                        @RequestParam String proyectoTitulo) {
         try {
+            logger.info("Recibida solicitud para cambiar estado de actividad:");
+            logger.info("  Actividad ID: {}", actividadId);
+            logger.info("  Plan Número: {}", planNumero);
+            logger.info("  Estado: {}", estado);
+            logger.info("  Proyecto CUIT: {}", proyectoCuit);
+            logger.info("  Proyecto Título: {}", proyectoTitulo);
+
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             if (auth == null || !auth.isAuthenticated() || !(auth.getPrincipal() instanceof CustomUserDetails)) {
                 logger.warn("Intento de acceso no autorizado para cambiar estado de actividad");
-                return "redirect:/login";
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("success", false, "message", "No autorizado"));
             }
 
             CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
             if (!(userDetails.getUsuario() instanceof DocenteSupervisor)) {
                 logger.warn("Usuario no autorizado intentando cambiar estado de actividad: {}", userDetails.getUsername());
-                return "redirect:/login";
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(Map.of("success", false, "message", "No tiene permisos para realizar esta acción"));
             }
 
             DocenteSupervisor tutor = (DocenteSupervisor) userDetails.getUsuario();
 
-            // Obtener la actividad y verificar que pertenece a un proyecto del tutor
+            // Obtener la actividad y verificar que pertenece a un proyecto
             Actividad actividad = docenteSupervisorService.getActividadById(actividadId, planNumero, proyectoCuit, proyectoTitulo);
             if (actividad == null) {
                 logger.warn("Actividad no encontrada: {}-{}-{}-{}", actividadId, planNumero, proyectoCuit, proyectoTitulo);
-                return "redirect:/docente-supervisor/dashboard";
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("success", false, "message", "Actividad no encontrada"));
             }
 
             Proyecto proyecto = actividad.getPlanDeTrabajo().getProyecto();
             if (proyecto.getTutorUNRN() == null || !proyecto.getTutorUNRN().getId().equals(tutor.getId())) {
                 logger.warn("Intento de cambiar estado de actividad en proyecto no autorizado");
-                return "redirect:/docente-supervisor/dashboard";
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(Map.of("success", false, "message", "No tiene permisos para modificar esta actividad"));
             }
 
             // Convertir el string a enum
@@ -301,7 +318,8 @@ public class DocenteSupervisorController {
                 estadoActividad = Actividad.EstadoActividad.valueOf(estado);
             } catch (IllegalArgumentException e) {
                 logger.error("Estado de actividad inválido: {}", estado);
-                return "redirect:/error";
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("success", false, "message", "Estado de actividad inválido"));
             }
 
             // Cambiar el estado de la actividad
@@ -311,33 +329,45 @@ public class DocenteSupervisorController {
             }
 
             docenteSupervisorService.guardarActividad(actividad);
-
-            logger.info("Redirigiendo a proyecto con CUIT: {} y Título: {}", proyectoCuit, proyectoTitulo);
-            return "redirect:/docente-supervisor/proyecto/" + proyectoCuit + "/" + proyectoTitulo;
+            
+            return ResponseEntity.ok(Map.of("success", true, "message", "Estado de actividad actualizado exitosamente"));
+            
         } catch (Exception e) {
-            logger.error("Error al cambiar estado de actividad: {}", e.getMessage(), e);
-            return "redirect:/error";
+            logger.error("Error al cambiar estado de actividad: ", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(Map.of("success", false, "message", "Error al cambiar el estado de la actividad: " + e.getMessage()));
         }
     }
 
     @PostMapping("/cambiar-estado-entrega")
     @Transactional
-    public String cambiarEstadoEntrega(@RequestParam Long entregaId,
+    public Object cambiarEstadoEntrega(@RequestParam Long entregaId,
                                      @RequestParam String estado,
                                      @RequestParam(required = false) String comentario,
                                      @RequestParam Long proyectoCuit,
-                                     @RequestParam String proyectoTitulo) {
+                                     @RequestParam String proyectoTitulo,
+                                     HttpServletRequest request) {
         try {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             if (auth == null || !auth.isAuthenticated() || !(auth.getPrincipal() instanceof CustomUserDetails)) {
                 logger.warn("Intento de acceso no autorizado para cambiar estado de entrega");
-                return "redirect:/login";
+                if (isAjax(request)) {
+                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(Map.of("success", false, "message", "No autorizado"));
+                } else {
+                    return "redirect:/login";
+                }
             }
 
             CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
             if (!(userDetails.getUsuario() instanceof DocenteSupervisor)) {
                 logger.warn("Usuario no autorizado intentando cambiar estado de entrega: {}", userDetails.getUsername());
-                return "redirect:/login";
+                if (isAjax(request)) {
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body(Map.of("success", false, "message", "No tiene permisos para cambiar estado de entrega"));
+                } else {
+                    return "redirect:/login";
+                }
             }
 
             DocenteSupervisor tutor = (DocenteSupervisor) userDetails.getUsuario();
@@ -346,13 +376,23 @@ public class DocenteSupervisorController {
             Entrega entrega = docenteSupervisorService.getEntregaById(entregaId);
             if (entrega == null) {
                 logger.warn("Entrega no encontrada: {}", entregaId);
-                return "redirect:/docente-supervisor/dashboard";
+                if (isAjax(request)) {
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(Map.of("success", false, "message", "Entrega no encontrada"));
+                } else {
+                    return "redirect:/docente-supervisor/dashboard";
+                }
             }
 
             Proyecto proyecto = entrega.getActividad().getPlanDeTrabajo().getProyecto();
             if (proyecto.getTutorUNRN() == null || !proyecto.getTutorUNRN().getId().equals(tutor.getId())) {
                 logger.warn("Intento de cambiar estado de entrega en proyecto no autorizado");
-                return "redirect:/docente-supervisor/dashboard";
+                if (isAjax(request)) {
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body(Map.of("success", false, "message", "No tiene permisos para modificar esta entrega"));
+                } else {
+                    return "redirect:/docente-supervisor/dashboard";
+                }
             }
 
             // Convertir el string a enum
@@ -361,7 +401,12 @@ public class DocenteSupervisorController {
                 estadoEntrega = Entrega.EstadoEntrega.valueOf(estado);
             } catch (IllegalArgumentException e) {
                 logger.error("Estado de entrega inválido: {}", estado);
-                return "redirect:/error";
+                if (isAjax(request)) {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(Map.of("success", false, "message", "Estado de entrega inválido"));
+                } else {
+                    return "redirect:/error";
+                }
             }
 
             // Cambiar el estado de la entrega
@@ -372,10 +417,19 @@ public class DocenteSupervisorController {
 
             docenteSupervisorService.guardarEntrega(entrega);
 
-            return "redirect:/docente-supervisor/proyecto/" + proyectoCuit + "/" + proyectoTitulo;
+            if (isAjax(request)) {
+                return ResponseEntity.ok(Map.of("success", true, "message", "Estado de entrega actualizado exitosamente"));
+            } else {
+                return "redirect:/docente-supervisor/proyecto/" + proyectoCuit + "/" + proyectoTitulo;
+            }
         } catch (Exception e) {
             logger.error("Error al cambiar estado de entrega: {}", e.getMessage(), e);
-            return "redirect:/error";
+            if (request != null && isAjax(request)) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("success", false, "message", "Error al cambiar el estado de la entrega: " + e.getMessage()));
+            } else {
+                return "redirect:/error";
+            }
         }
     }
 
@@ -484,5 +538,9 @@ public class DocenteSupervisorController {
             logger.error("Error al descargar el archivo del informe: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+    private boolean isAjax(HttpServletRequest request) {
+        return request != null && "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
     }
 }

@@ -440,7 +440,6 @@
             <span class="icon-separator"></span>
             <span><i class="fas fa-envelope"></i></span>
             <span class="icon-separator"></span>
-            <span>Perfil: Alumno</span>
         </div>
     </nav>
 
@@ -493,7 +492,6 @@
                         </div>
                         <div class="pps-actions">
                             <a th:href="@{/estudiante-sin-pps/proyecto/{cuit}/{titulo}(cuit=${proyecto.entidad.cuit}, titulo=${proyecto.titulo})}" class="btn primary">
-                                <i class="fas fa-eye"></i> Ver Detalles
                             </a>
                             <form th:action="@{/estudiante-sin-pps/solicitud/{id}/cancelar(id=${proyecto.solicitudes != null and !proyecto.solicitudes.empty ? proyecto.solicitudes[0].id : ''})}" method="post" style="display: inline;">
                                 <button type="submit" class="btn secondary">
@@ -537,7 +535,7 @@
                         </div>
                         <div class="pps-actions">
                             <a th:href="@{/estudiante-sin-pps/proyecto/{cuit}/{titulo}(cuit=${proyecto.entidad.cuit}, titulo=${proyecto.titulo})}" class="btn primary">
-                                <i class="fas fa-eye"></i> Ver Detalles
+
                             </a>
                             <form th:action="@{/estudiante-sin-pps/proyecto/{cuit}/{titulo}/inscribirse(cuit=${proyecto.entidad.cuit}, titulo=${proyecto.titulo})}" method="post" style="display: inline;">
                                 <button type="submit" class="btn secondary">

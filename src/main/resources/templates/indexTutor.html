@@ -287,7 +287,8 @@
     <div class="sub-header">
         <div class="propuesta">
             <span>Propuesta:</span>
-            <select id="admin-select" onchange="if(this.value==='logout'){window.location.href='login.html';}">
+            <form id="logoutForm" th:action="@{/logout}" method="post" style="display:none;"></form>
+            <select id="admin-select" onchange="if(this.value==='logout'){document.getElementById('logoutForm').submit();}">
                 <option value="admin">Docente Supervisor</option>
                 <option value="logout">Cerrar sesión</option>
             </select>
@@ -322,7 +323,6 @@
             <span class="icon-separator"></span>
             <span><i class="fas fa-envelope"></i></span>
             <span class="icon-separator"></span>
-            <span>Perfil: Docente Supervisor</span>
         </div>
     </div>
 </nav>

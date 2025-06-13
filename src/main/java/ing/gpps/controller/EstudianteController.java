@@ -57,7 +57,7 @@ public class EstudianteController {
 
     private static final Logger logger = LoggerFactory.getLogger(EstudianteController.class);
 
-    @Value("${upload.path}")
+    @Value("${app.upload.path}")
     private String uploadPath;
 
     @Autowired

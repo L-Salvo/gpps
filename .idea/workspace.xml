@@ -5,22 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8a4dffd5-889c-4703-adf3-92d1edf6cbdc" name="Changes" comment="Tabla convenios en admin">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/fonts/ARIALN.TTF" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/fonts/ARIALNB.TTF" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/fonts/ARIALNBI.TTF" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/fonts/ARIALNI.TTF" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/fonts/arial.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/fonts/arialbd.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/fonts/arialbi.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/fonts/ariali.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/fonts/ariblk.ttf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ing/gpps/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ing/gpps/controller/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ing/gpps/controller/DireccionCarreraController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ing/gpps/controller/DireccionCarreraController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ing/gpps/controller/DocenteSupervisorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ing/gpps/controller/DocenteSupervisorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ing/gpps/controller/EstudianteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ing/gpps/controller/EstudianteController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ing/gpps/service/ConvenioService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ing/gpps/service/ConvenioService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ing/gpps/service/DocenteSupervisorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ing/gpps/service/DocenteSupervisorService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ing/gpps/service/FileStorageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ing/gpps/service/FileStorageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/detalleProyectoDireccionDeCarrera.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/detalleProyectoDireccionDeCarrera.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/indexAdmin.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/indexAdmin.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/indexAdminEntidad.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/indexAdminEntidad.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/indexAlumno.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/indexAlumno.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/indexAlumnoSinPPS.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/indexAlumnoSinPPS.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/indexDireccionDeCarrera.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/indexDireccionDeCarrera.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/postulantesProyectoDireccionDeCarrera.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/postulantesProyectoDireccionDeCarrera.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/indexDocenteSupervisor.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/indexDocenteSupervisor.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/indexDocenteSupervisorProyecto.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/indexDocenteSupervisorProyecto.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/indexEntidad.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/indexEntidad.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/indexTutor.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/indexTutor.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +43,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="HU-adminEntidad" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -53,12 +54,12 @@
     &quot;assignee&quot;: &quot;Cristi-An12&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/L-Salvo/gpps.git&quot;,
-    &quot;accountId&quot;: &quot;06c589a1-3503-4190-b8f8-1e390d41c1ff&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/L-Salvo/gpps.git",
+    "accountId": "1e534f49-9fa5-4b28-bdb5-479de0d46fe4"
   }
-}</component>
+}]]></component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -91,7 +92,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "main2.0-EntregasYActividades",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/1lau_/Documents/Proyectos/gpps/src/main/resources/fonts",
@@ -247,23 +248,18 @@
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/ing/gpps/controller/DireccionCarreraController.java</url>
-          <line>123</line>
-          <option name="timeStamp" value="22" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/ing/gpps/service/ConvenioService.java</url>
-          <line>148</line>
+          <line>221</line>
           <option name="timeStamp" value="23" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/ing/gpps/service/AdminEntidadService.java</url>
-          <line>215</line>
+          <line>216</line>
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/ing/gpps/service/ConvenioService.java</url>
-          <line>58</line>
+          <line>127</line>
           <option name="timeStamp" value="30" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
