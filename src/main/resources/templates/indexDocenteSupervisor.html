@@ -279,7 +279,7 @@
         <div class="header-container">
             <div class="logo-container">
                 <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-So2CHeud6JF1xVNp1LlSIuwt3sgVUg.png" width=70 alt="Logo UNRN">
-                <img src="https://lh3.googleusercontent.com/a-/ALV-UjVX7tQfNfC44NY6OR_Fwc7MJze4ucpzRbw1lXa0yPCWLi6cuJkC=s129-p-k-rw-no" width=100 alt="Logo LIA">
+                <img src="https://d3r3nlpo48l22w.cloudfront.net/uploads/2024/12/LIA-logo-2022-RGB-1.png" width=190 alt="Logo LIA">
             </div>
             <div class="user-info">
                 <div class="user-dropdown">
@@ -328,33 +328,33 @@
     <main>
         <section id="proyectos">
             <h2>Proyectos Activos</h2>
-         
+
             <table>
                 <thead>
-                    <tr>
-                        <th>Título</th>
-                        <th>Estudiante</th>
-                        <th>Entidad</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
+                <tr>
+                    <th>Título</th>
+                    <th>Estudiante</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="proyecto : ${proyectos}">
-                        <td th:text="${proyecto.titulo}">Título del Proyecto</td>
-                        <td th:text="${proyecto.estudiante.nombre + ' ' + proyecto.estudiante.apellido}">Nombre Estudiante</td>
-                        <td th:text="${proyecto.entidad.nombre}">Nombre Entidad</td>
-                        <td>
-                            <span class="entrega-status" th:classappend="${proyecto.estado == 'ACTIVO' ? 'status-approved' : 'status-pending'}"
-                                  th:text="${proyecto.estado}">Estado</span>
-                        </td>
-                        <td>
-                            <a th:href="@{/docente-supervisor/proyecto/{cuit}/{titulo}(cuit=${proyecto.proyectoId.cuitEntidad},titulo=${proyecto.proyectoId.titulo})}" 
-                               class="btn small">
-                                <i class="fas fa-eye"></i> Ver
-                            </a>
-                        </td>
-                    </tr>
+                <tr th:each="proyecto : ${proyectos}">
+                    <td th:text="${proyecto.titulo}">Título del Proyecto</td>
+                    <td th:text="${proyecto.estudiante != null ? proyecto.estudiante.nombre + ' ' + proyecto.estudiante.apellido : 'Sin asignar'}">
+                        Estudiante
+                    </td>
+                    <td>
+                    <span class="entrega-status" th:classappend="${proyecto.estado == 'ACTIVO' ? 'status-approved' : 'status-pending'}"
+                          th:text="${proyecto.estado}">Estado</span>
+                    </td>
+                    <td>
+                        <a th:href="@{/docente-supervisor/proyecto/{cuit}/{titulo}(cuit=${proyecto.proyectoId.cuitEntidad},titulo=${proyecto.proyectoId.titulo})}"
+                           class="btn small">
+                            <i class="fas fa-eye"></i> Ver
+                        </a>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </section>
@@ -363,30 +363,31 @@
             <h2>Estudiantes Asignados</h2>
             <table>
                 <thead>
-                    <tr>
-                        <th>DNI</th>
-                        <th>Legajo</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Email</th>
-                        <th>Teléfono</th>
-                    </tr>
+                <tr>
+                    <th>DNI</th>
+                    <th>Legajo</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="proyecto : ${proyectos}" th:if="${proyecto.estudiante != null}">
-                        <td th:text="${proyecto.estudiante.dni}">DNI</td>
-                        <td th:text="${proyecto.estudiante.legajo}">Legajo</td>
-                        <td th:text="${proyecto.estudiante.nombre}">Nombre</td>
-                        <td th:text="${proyecto.estudiante.apellido}">Apellido</td>
-                        <td th:text="${proyecto.estudiante.email}">Email</td>
-                        <td th:text="${proyecto.estudiante.numTelefono}">Teléfono</td>
-                    </tr>
-                    <tr th:if="${#lists.isEmpty(proyectos)}">
-                        <td colspan="6" style="text-align:center;">No hay estudiantes asignados.</td>
-                    </tr>
+                <tr th:each="proyecto : ${proyectos}" th:if="${proyecto.estudiante != null}">
+                    <td th:text="${proyecto.estudiante.dni}">DNI</td>
+                    <td th:text="${proyecto.estudiante.legajo}">Legajo</td>
+                    <td th:text="${proyecto.estudiante.nombre}">Nombre</td>
+                    <td th:text="${proyecto.estudiante.apellido}">Apellido</td>
+                    <td th:text="${proyecto.estudiante.email}">Email</td>
+                    <td th:text="${proyecto.estudiante.numTelefono}">Teléfono</td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(proyectos)}">
+                    <td colspan="6" style="text-align:center;">No hay estudiantes asignados.</td>
+                </tr>
                 </tbody>
             </table>
         </section>
+
     </main>
 
     <footer>

@@ -23,6 +23,11 @@ public class LoginController {
                     logger.info("Redirigiendo estudiante a su dashboard");
                     return "redirect:/estudiante/dashboard";
                 } else if (userDetails.getUsuario() instanceof DocenteSupervisor) {
+                    DocenteSupervisor tutor = (DocenteSupervisor) userDetails.getUsuario();
+                    if (tutor == null || tutor.getId() == null) {
+                        logger.error("Error: Docente supervisor no encontrado o ID nulo");
+                        return "redirect:/error";
+                    }
                     logger.info("Redirigiendo docente supervisor a su dashboard");
                     return "redirect:/docente-supervisor/dashboard";
                 } else if (userDetails.getUsuario() instanceof TutorExterno) {
@@ -31,7 +36,7 @@ public class LoginController {
                 } else if (userDetails.getUsuario() instanceof Admin) {
                     logger.info("Redirigiendo admin a su dashboard");
                     return "redirect:/admin/dashboard";
-                }else if (userDetails.getUsuario() instanceof AdminEntidad) {
+                } else if (userDetails.getUsuario() instanceof AdminEntidad) {
                     logger.info("Redirigiendo admin-entidad a su dashboard");
                     return "redirect:/admin-entidad/dashboard";
                 }

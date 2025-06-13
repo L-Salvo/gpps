@@ -5,18 +5,134 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8a4dffd5-889c-4703-adf3-92d1edf6cbdc" name="Changes" comment="Tabla convenios en admin">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ing/gpps/controller/TutorExternoController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ing/gpps/service/TutorExternoService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/indexTutorExterno.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/indexTutorExternoProyecto.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ing/gpps/controller/DireccionCarreraController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ing/gpps/controller/DireccionCarreraController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ing/gpps/repository/DocenteSupervisorRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ing/gpps/repository/DocenteSupervisorRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ing/gpps/repository/ProyectoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ing/gpps/repository/ProyectoRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ing/gpps/service/DireccionDeCarreraService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ing/gpps/service/DireccionDeCarreraService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ing/gpps/service/GenerarConvenioService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ing/gpps/service/GenerarConvenioService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ing/gpps/controller/DocenteSupervisorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ing/gpps/controller/DocenteSupervisorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ing/gpps/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ing/gpps/controller/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/detalleProyectoDireccionDeCarrera.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/detalleProyectoDireccionDeCarrera.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/indexAdmin.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/indexAdmin.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/indexAdminEntidad.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/indexAdminEntidad.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/indexAlumno.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/indexAlumno.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/indexAlumnoSinPPS.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/indexAlumnoSinPPS.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/indexDireccionDeCarrera.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/indexDireccionDeCarrera.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/indexDocenteSupervisor.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/indexDocenteSupervisor.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/indexDocenteSupervisorProyecto.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/indexDocenteSupervisorProyecto.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/indexEntidad.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/indexEntidad.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/indexTutor.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/indexTutor.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/indexTutorExterno.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/indexTutorExterno.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/indexTutorExternoProyecto.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/indexTutorExternoProyecto.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/postulantesProyectoDireccionDeCarrera.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/postulantesProyectoDireccionDeCarrera.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/DemoApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/DemoApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/config/WebConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/config/WebConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/controller/ActividadController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/controller/ActividadController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/controller/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/controller/AdminController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/controller/AdminEntidadController$PlanForm.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/controller/AdminEntidadController$PlanForm.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/controller/AdminEntidadController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/controller/AdminEntidadController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/controller/DireccionCarreraController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/controller/DireccionCarreraController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/controller/DocenteSupervisorController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/controller/DocenteSupervisorController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/controller/ErrorController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/controller/ErrorController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/controller/EstudianteController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/controller/EstudianteController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/controller/EstudianteSinPPSController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/controller/EstudianteSinPPSController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/controller/InformeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/controller/InformeController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/controller/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/controller/LoginController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/controller/NotificacionController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/controller/NotificacionController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/controller/PlanDeTrabajoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/controller/PlanDeTrabajoController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/controller/TutorExternoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/controller/TutorExternoController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/controller/UsuarioController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/controller/UsuarioController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/dto/NotificacionDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/dto/NotificacionDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/entity/Solicitud$EstadoSolicitud.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/entity/Solicitud$EstadoSolicitud.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/entity/Solicitud.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/entity/Solicitud.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/entity/idClasses/ActividadId.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/entity/idClasses/ActividadId.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/entity/idClasses/InformeId.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/entity/idClasses/InformeId.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/entity/idClasses/PlanDeTrabajoId.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/entity/idClasses/PlanDeTrabajoId.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/entity/idClasses/ProyectoId.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/entity/idClasses/ProyectoId.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/entity/institucional/Actividad$EstadoActividad.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/entity/institucional/Actividad$EstadoActividad.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/entity/institucional/Actividad.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/entity/institucional/Actividad.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/entity/institucional/Area.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/entity/institucional/Area.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/entity/institucional/Convenio.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/entity/institucional/Convenio.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/entity/institucional/Entidad.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/entity/institucional/Entidad.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/entity/institucional/Entrega$EstadoEntrega.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/entity/institucional/Entrega$EstadoEntrega.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/entity/institucional/Entrega.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/entity/institucional/Entrega.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/entity/institucional/Informe.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/entity/institucional/Informe.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/entity/institucional/PlanDeTrabajo.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/entity/institucional/PlanDeTrabajo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/entity/institucional/Proyecto$EstadoProyecto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/entity/institucional/Proyecto$EstadoProyecto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/entity/institucional/Proyecto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/entity/institucional/Proyecto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/entity/institucional/TipoEntidad.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/entity/institucional/TipoEntidad.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/entity/users/Admin.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/entity/users/Admin.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/entity/users/AdminEntidad.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/entity/users/AdminEntidad.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/entity/users/DireccionDeCarrera.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/entity/users/DireccionDeCarrera.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/entity/users/DocenteSupervisor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/entity/users/DocenteSupervisor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/entity/users/Estudiante.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/entity/users/Estudiante.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/entity/users/Notificar.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/entity/users/Notificar.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/entity/users/TutorExterno.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/entity/users/TutorExterno.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/entity/users/Usuario.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/entity/users/Usuario.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/notificaciones/BaseDeNotificacionSubject.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/notificaciones/BaseDeNotificacionSubject.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/notificaciones/EventoNotificacion.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/notificaciones/EventoNotificacion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/notificaciones/Notificacion.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/notificaciones/Notificacion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/notificaciones/NotificacionSubject.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/notificaciones/NotificacionSubject.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/notificaciones/NotificacionesService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/notificaciones/NotificacionesService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/notificaciones/Notificar.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/notificaciones/Notificar.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/notificaciones/TipoEvento.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/notificaciones/TipoEvento.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/repository/ActividadRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/repository/ActividadRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/repository/AdminEntidadRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/repository/AdminEntidadRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/repository/AreaRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/repository/AreaRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/repository/ConvenioRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/repository/ConvenioRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/repository/DocenteSupervisorRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/repository/DocenteSupervisorRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/repository/EntidadRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/repository/EntidadRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/repository/EntregaRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/repository/EntregaRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/repository/EstudianteRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/repository/EstudianteRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/repository/InformeRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/repository/InformeRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/repository/NotificacionRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/repository/NotificacionRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/repository/PlanDeTrabajoRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/repository/PlanDeTrabajoRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/repository/ProyectoRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/repository/ProyectoRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/repository/SetupDataBase.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/repository/SetupDataBase.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/repository/SolicitudRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/repository/SolicitudRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/repository/TutorRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/repository/TutorRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/repository/UsuarioRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/repository/UsuarioRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/security/CustomAuthenticationSuccessHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/security/CustomAuthenticationSuccessHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/security/CustomUserDetails.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/security/CustomUserDetails.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/security/CustomUserDetailsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/security/CustomUserDetailsService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/security/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/security/SecurityConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/service/ActividadService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/service/ActividadService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/service/AdminEntidadService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/service/AdminEntidadService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/service/ConvenioService$HeaderFooterPageEvent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/service/ConvenioService$HeaderFooterPageEvent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/service/ConvenioService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/service/ConvenioService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/service/DireccionDeCarreraService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/service/DireccionDeCarreraService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/service/DocenteSupervisorService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/service/DocenteSupervisorService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/service/EmailService$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/service/EmailService$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/service/EmailService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/service/EmailService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/service/EntidadService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/service/EntidadService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/service/EntregaService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/service/EntregaService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/service/EstudianteService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/service/EstudianteService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/service/FileStorageService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/service/FileStorageService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/service/GenerarConvenioService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/service/GenerarConvenioService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/service/InformeService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/service/InformeService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/service/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/service/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/service/NotificacionVisualService$NotificacionStats.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/service/NotificacionVisualService$NotificacionStats.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/service/NotificacionVisualService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/service/NotificacionVisualService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/service/PlanDeTrabajoService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/service/PlanDeTrabajoService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/service/ProyectoService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/service/ProyectoService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/service/SolicitudService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/service/SolicitudService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/service/TutorExternoService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/service/TutorExternoService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/service/UsuarioFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/service/UsuarioFactory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ing/gpps/service/UsuarioService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ing/gpps/service/UsuarioService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/detalleProyectoDireccionDeCarrera.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/detalleProyectoDireccionDeCarrera.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/indexAdmin.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/indexAdmin.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/indexAdminEntidad.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/indexAdminEntidad.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/indexAlumno.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/indexAlumno.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/indexAlumnoSinPPS.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/indexAlumnoSinPPS.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/indexDireccionDeCarrera.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/indexDireccionDeCarrera.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/indexDocenteSupervisor.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/indexDocenteSupervisor.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/indexDocenteSupervisorProyecto.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/indexDocenteSupervisorProyecto.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/indexEntidad.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/indexEntidad.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/indexTutor.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/indexTutor.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/indexTutorExterno.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/indexTutorExterno.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/indexTutorExternoProyecto.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/indexTutorExternoProyecto.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/postulantesProyectoDireccionDeCarrera.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/postulantesProyectoDireccionDeCarrera.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,24 +192,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.DemoApplication.executor": "Run",
-    "JUnit.NotificarServiceTest.executor": "Run",
-    "Maven.demo [clean].executor": "Run",
-    "Maven.demo [org.apache.maven.plugins:maven-clean-plugin:3.3.2:clean].executor": "Run",
-    "Maven.demo [org.apache.maven.plugins:maven-clean-plugin:3.4.1:clean].executor": "Run",
-    "Maven.demo [org.apache.maven.plugins:maven-jar-plugin:3.4.2:jar].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main2.0-EntregasYActividades",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Sebas Acosta/IdeaProjects/gpps/src/main/resources/templates",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.DemoApplication.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.NotificarServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.demo [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.demo [org.apache.maven.plugins:maven-clean-plugin:3.3.2:clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.demo [org.apache.maven.plugins:maven-clean-plugin:3.4.1:clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.demo [org.apache.maven.plugins:maven-jar-plugin:3.4.2:jar].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main2.0-EntregasYActividades&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Sebas Acosta/IdeaProjects/gpps/src/main/resources/templates&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="ing.gpps.repository" />
@@ -232,41 +348,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/ing/gpps/controller/AdminController.java</url>
           <line>216</line>
           <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/ing/gpps/controller/DireccionCarreraController.java</url>
-          <line>101</line>
-          <option name="timeStamp" value="17" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/ing/gpps/controller/DireccionCarreraController.java</url>
-          <line>80</line>
-          <option name="timeStamp" value="18" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/ing/gpps/service/ConvenioService.java</url>
-          <line>221</line>
-          <option name="timeStamp" value="23" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/ing/gpps/service/AdminEntidadService.java</url>
-          <line>216</line>
-          <option name="timeStamp" value="25" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/ing/gpps/service/ConvenioService.java</url>
-          <line>127</line>
-          <option name="timeStamp" value="30" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/ing/gpps/controller/DireccionCarreraController.java</url>
-          <line>243</line>
-          <option name="timeStamp" value="31" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/ing/gpps/controller/DireccionCarreraController.java</url>
-          <line>195</line>
-          <option name="timeStamp" value="32" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

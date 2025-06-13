@@ -83,19 +83,10 @@ public class DocenteSupervisorController {
             }
 
             DocenteSupervisor tutor = (DocenteSupervisor) userDetails.getUsuario();
-            if (tutor == null || tutor.getId() == null) {
-                logger.error("Error: Docente supervisor no encontrado o ID nulo");
-                return "redirect:/error";
-            }
-
-            List<Proyecto> proyectos = docenteSupervisorService.getProyectosByTutor(tutor);
-            if (proyectos == null) {
-                logger.error("Error al obtener proyectos del tutor: {}", tutor.getId());
-                return "redirect:/error";
-            }
+            List<Proyecto> proyectos = tutor != null ? docenteSupervisorService.getProyectosByTutor(tutor) : List.of();
 
             model.addAttribute("tutor", tutor);
-            model.addAttribute("proyectos", proyectos);
+            model.addAttribute("proyectos", proyectos != null ? proyectos : List.of());
             model.addAttribute("menuItems", Map.of(
                 "dashboard", "Panel Principal",
                 "proyectos", "Mis Proyectos",
@@ -105,7 +96,7 @@ public class DocenteSupervisorController {
             return "indexDocenteSupervisor";
         } catch (Exception e) {
             logger.error("Error al cargar el dashboard: {}", e.getMessage());
-            return "redirect:/error";
+            return "indexDocenteSupervisor";
         }
     }
 

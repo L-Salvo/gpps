@@ -395,7 +395,7 @@
     <div class="header-container">
         <div class="logo-container">
             <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-So2CHeud6JF1xVNp1LlSIuwt3sgVUg.png" width=70 alt="Logo UNRN">
-            <img src="https://lh3.googleusercontent.com/a-/ALV-UjVX7tQfNfC44NY6OR_Fwc7MJze4ucpzRbw1lXa0yPCWLi6cuJkC=s129-p-k-rw-no" width=100 alt="Logo LIA">
+            <img src="https://d3r3nlpo48l22w.cloudfront.net/uploads/2024/12/LIA-logo-2022-RGB-1.png" width=190 alt="Logo LIA">
         </div>
         <div class="user-info">
             <div class="user-dropdown">
@@ -434,11 +434,14 @@
     <div class="info-section">
         <h3>Detalles del Proyecto</h3>
         <div th:if="${proyecto != null}">
-            <p><strong>Título:</strong> <span th:text="${proyecto.titulo}"></span></p>
-            <p><strong>Descripción:</strong> <span th:text="${proyecto.descripcion}"></span></p>
-            <p><strong>Estudiante:</strong> <span th:text="${proyecto.estudiante.nombre + ' ' + proyecto.estudiante.apellido}"></span></p>
-            <p><strong>Entidad:</strong> <span th:text="${proyecto.entidad.nombre}"></span></p>
-            <p><strong>Progreso:</strong> <span th:text="${progreso + '%'}"></span></p>
+            <p><strong>Título:</strong> <span th:text="${proyecto.proyectoId?.titulo ?: 'Sin asignar'}"></span></p>
+            <p><strong>Descripción:</strong> <span th:text="${proyecto.descripcion ?: 'Sin asignar'}"></span></p>
+            <p><strong>Estudiante:</strong> <span th:text="${proyecto.estudiante != null ? (proyecto.estudiante.nombre + ' ' + proyecto.estudiante.apellido) : 'Sin asignar'}"></span></p>
+            <p><strong>Entidad:</strong> <span th:text="${proyecto.entidad?.nombre ?: 'Sin asignar'}"></span></p>
+            <p><strong>Progreso:</strong> <span th:text="${progreso != null ? (progreso + '%') : '0%'}"></span></p>
+        </div>
+        <div th:unless="${proyecto != null}" class="empty-message">
+            No se encontró información del proyecto
         </div>
     </div>
 
@@ -449,149 +452,183 @@
                 <i class="fas fa-plus"></i> Crear Actividad
             </button>
         </div>
-        <table>
-            <thead>
-            <tr>
-                <th>Número</th>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Horas</th>
-                <th>Fecha Límite</th>
-                <th>Estado</th>
-                <th>Comentarios</th>
-                <th>Acciones</th>
-                <th>Archivo</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="actividad : ${actividades}">
-                <td th:text="${actividad.actividadId.numero}">1</td>
-                <td th:text="${actividad.nombre}">Nombre Actividad</td>
-                <td th:text="${actividad.descripcion}">Descripción</td>
-                <td th:text="${actividad.horas}">Horas</td>
-                <td th:text="${actividad.fechaLimite != null ? #temporals.format(actividad.fechaLimite, 'dd/MM/yyyy') : '-'}">Fecha Límite</td>
-                <td>
-                            <span class="status-badge" th:classappend="${actividad.estado == 'COMPLETADA' ? 'status-approved' :
-                                                                      actividad.estado == 'RECHAZADA' ? 'status-rejected' :
-                                                                      actividad.estado == 'EN_CURSO' ? 'status-submitted' : 'status-pending'}"
-                                  th:text="${actividad.estado}">Estado</span>
-                </td>
-                <td>
+        <div th:if="${not #lists.isEmpty(actividades)}">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Número</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Horas</th>
+                        <th>Fecha Límite</th>
+                        <th>Estado</th>
+                        <th>Comentarios</th>
+                        <th>Acciones</th>
+                        <th>Archivo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="actividad : ${actividades}">
+                        <td th:text="${actividad.actividadId?.numero ?: 'Sin asignar'}">1</td>
+                        <td th:text="${actividad.nombre ?: 'Sin asignar'}">Nombre Actividad</td>
+                        <td th:text="${actividad.descripcion ?: 'Sin asignar'}">Descripción</td>
+                        <td th:text="${actividad.horas ?: 'Sin asignar'}">Horas</td>
+                        <td th:text="${actividad.fechaLimite != null ? #temporals.format(actividad.fechaLimite, 'dd/MM/yyyy') : 'Sin asignar'}">Fecha Límite</td>
+                        <td>
+                            <span class="status-badge" th:classappend="${actividad.estado != null ? (actividad.estado == 'COMPLETADA' ? 'status-approved' :
+                                                                           actividad.estado == 'RECHAZADA' ? 'status-rejected' :
+                                                                           actividad.estado == 'EN_CURSO' ? 'status-submitted' : 'status-pending') : 'status-pending'}"
+                                  th:text="${actividad.estado ?: 'Sin asignar'}">Estado</span>
+                        </td>
+                        <td>
                             <span th:if="${actividad.comentarios != null && !actividad.comentarios.isEmpty()}"
                                   class="comment-badge"
                                   th:text="${actividad.comentarios}">Comentarios</span>
-                    <span th:unless="${actividad.comentarios != null && !actividad.comentarios.isEmpty()}"
-                          class="no-comment">Sin comentarios</span>
-                </td>
-                <td>
-                    <button class="cambiar-estado-btn"
-                            th:data-actividad-id="${actividad.actividadId.numero}"
-                            th:data-plan-numero="${actividad.actividadId.planDeTrabajoId.numero}"
-                            th:data-proyecto-cuit="${actividad.actividadId.planDeTrabajoId.proyectoId.cuitEntidad}"
-                            th:data-proyecto-titulo="${actividad.actividadId.planDeTrabajoId.proyectoId.titulo}">
-                        <i class="fas fa-edit"></i> Cambiar Estado
-                    </button>
-                </td>
-                <td>
-                    <a th:if="${actividad.rutaArchivo != null}"
-                       th:href="@{/docente-supervisor/descargarActividad/{numero}/{planNumero}/{proyectoTitulo}/{proyectoCuit}(
-                                   numero=${actividad.actividadId.numero},
-                                   planNumero=${actividad.actividadId.planDeTrabajoId.numero},
-                                   proyectoTitulo=${actividad.actividadId.planDeTrabajoId.proyectoId.titulo},
-                                   proyectoCuit=${actividad.actividadId.planDeTrabajoId.proyectoId.cuitEntidad}
-                               )}"
-                       class="btn small">
-                        <i class="fas fa-download"></i> Descargar
-                    </a>
-                    <span th:unless="${actividad.rutaArchivo != null}" class="no-file">Sin archivo</span>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                            <span th:unless="${actividad.comentarios != null && !actividad.comentarios.isEmpty()}"
+                                  class="no-comment">Sin comentarios</span>
+                        </td>
+                        <td>
+                            <button th:if="${actividad.actividadId != null && actividad.actividadId.numero != null && 
+                                          actividad.actividadId.planDeTrabajoId != null && 
+                                          actividad.actividadId.planDeTrabajoId.numero != null && 
+                                          actividad.actividadId.planDeTrabajoId.proyectoId != null && 
+                                          actividad.actividadId.planDeTrabajoId.proyectoId.cuitEntidad != null && 
+                                          actividad.actividadId.planDeTrabajoId.proyectoId.titulo != null}"
+                                    class="cambiar-estado-btn"
+                                    th:data-actividad-id="${actividad.actividadId.numero}"
+                                    th:data-plan-numero="${actividad.actividadId.planDeTrabajoId.numero}"
+                                    th:data-proyecto-cuit="${actividad.actividadId.planDeTrabajoId.proyectoId.cuitEntidad}"
+                                    th:data-proyecto-titulo="${actividad.actividadId.planDeTrabajoId.proyectoId.titulo}">
+                                <i class="fas fa-edit"></i> Cambiar Estado
+                            </button>
+                        </td>
+                        <td>
+                            <a th:if="${actividad.rutaArchivo != null && actividad.actividadId != null && 
+                                     actividad.actividadId.planDeTrabajoId != null && 
+                                     actividad.actividadId.planDeTrabajoId.proyectoId != null}"
+                               th:href="@{/docente-supervisor/descargarActividad/{numero}/{planNumero}/{proyectoTitulo}/{proyectoCuit}(
+                                            numero=${actividad.actividadId.numero},
+                                            planNumero=${actividad.actividadId.planDeTrabajoId.numero},
+                                            proyectoTitulo=${actividad.actividadId.planDeTrabajoId.proyectoId.titulo},
+                                            proyectoCuit=${actividad.actividadId.planDeTrabajoId.proyectoId.cuitEntidad}
+                                        )}"
+                               class="btn small">
+                                <i class="fas fa-download"></i> Descargar
+                            </a>
+                            <span th:unless="${actividad.rutaArchivo != null}" class="no-file">Sin archivo</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:unless="${not #lists.isEmpty(actividades)}" class="empty-message">
+            No hay actividades registradas
+        </div>
     </div>
 
     <div class="info-section">
         <h3>Entregas</h3>
-        <table>
-            <thead>
-            <tr>
-                <th>Título</th>
-                <th>Descripción</th>
-                <th>Fecha Límite</th>
-                <th>Fecha Entrega</th>
-                <th>Estado</th>
-                <th>Comentarios</th>
-                <th>Acciones</th>
-                <th>Archivo</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="entrega : ${entregas}">
-                <td th:text="${entrega.titulo}">Título Entrega</td>
-                <td th:text="${entrega.descripcion}">Descripción</td>
-                <td th:text="${#temporals.format(entrega.fechaLimite, 'dd/MM/yyyy')}">Fecha Límite</td>
-                <td th:text="${entrega.fechaEntrega != null ? #temporals.format(entrega.fechaEntrega, 'dd/MM/yyyy') : '-'}">Fecha Entrega</td>
-                <td>
-                            <span class="status-badge" th:classappend="${entrega.estado == 'APROBADO' ? 'status-approved' :
-                                                                      entrega.estado == 'RECHAZADO' ? 'status-rejected' :
-                                                                      entrega.estado == 'ENTREGADO' ? 'status-submitted' : 'status-pending'}"
-                                  th:text="${entrega.estado}">Estado</span>
-                </td>
-                <td>
+        <div th:if="${not #lists.isEmpty(entregas)}">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Descripción</th>
+                        <th>Fecha Límite</th>
+                        <th>Fecha Entrega</th>
+                        <th>Estado</th>
+                        <th>Comentarios</th>
+                        <th>Acciones</th>
+                        <th>Archivo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="entrega : ${entregas}">
+                        <td th:text="${entrega.titulo ?: 'Sin asignar'}">Título Entrega</td>
+                        <td th:text="${entrega.descripcion ?: 'Sin asignar'}">Descripción</td>
+                        <td th:text="${entrega.fechaLimite != null ? #temporals.format(entrega.fechaLimite, 'dd/MM/yyyy') : 'Sin asignar'}">Fecha Límite</td>
+                        <td th:text="${entrega.fechaEntrega != null ? #temporals.format(entrega.fechaEntrega, 'dd/MM/yyyy') : 'Sin asignar'}">Fecha Entrega</td>
+                        <td>
+                            <span class="status-badge" th:classappend="${entrega.estado != null ? (entrega.estado == 'APROBADO' ? 'status-approved' :
+                                                                           entrega.estado == 'RECHAZADO' ? 'status-rejected' :
+                                                                           entrega.estado == 'ENTREGADO' ? 'status-submitted' : 'status-pending') : 'status-pending'}"
+                                  th:text="${entrega.estado ?: 'Sin asignar'}">Estado</span>
+                        </td>
+                        <td>
                             <span th:if="${entrega.comentarios != null && !entrega.comentarios.isEmpty()}"
                                   class="comment-badge"
                                   th:text="${entrega.comentarios}">Comentarios</span>
-                    <span th:unless="${entrega.comentarios != null && !entrega.comentarios.isEmpty()}"
-                          class="no-comment">Sin comentarios</span>
-                </td>
-                <td>
-                    <button class="cambiar-estado-btn"
-                            th:onclick="cambiarEstadoEntrega([[${entrega.id}]], '[[${proyecto.proyectoId.cuitEntidad}]]', '[[${proyecto.proyectoId.titulo}]]')">
-                        <i class="fas fa-edit"></i> Cambiar Estado
-                    </button>
-                </td>
-                <td>
-                    <a th:if="${entrega.rutaArchivo != null}"
-                       th:href="@{/docente-supervisor/descargarEntrega/{id}(id=${entrega.id})}"
-                       class="btn small">
-                        <i class="fas fa-download"></i> Descargar
-                    </a>
-                    <span th:unless="${entrega.rutaArchivo != null}" class="no-file">Sin archivo</span>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                            <span th:unless="${entrega.comentarios != null && !entrega.comentarios.isEmpty()}"
+                                  class="no-comment">Sin comentarios</span>
+                        </td>
+                        <td>
+                            <button th:if="${entrega.id != null && proyecto != null && proyecto.proyectoId != null && 
+                                          proyecto.proyectoId.cuitEntidad != null && proyecto.proyectoId.titulo != null}"
+                                    class="cambiar-estado-btn"
+                                    th:onclick="cambiarEstadoEntrega([[${entrega.id}]], '[[${proyecto.proyectoId.cuitEntidad}]]', '[[${proyecto.proyectoId.titulo}]]')">
+                                <i class="fas fa-edit"></i> Cambiar Estado
+                            </button>
+                        </td>
+                        <td>
+                            <a th:if="${entrega.rutaArchivo != null && entrega.id != null}"
+                               th:href="@{/docente-supervisor/descargarEntrega/{id}(id=${entrega.id})}"
+                               class="btn small">
+                                <i class="fas fa-download"></i> Descargar
+                            </a>
+                            <span th:unless="${entrega.rutaArchivo != null}" class="no-file">Sin archivo</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:unless="${not #lists.isEmpty(entregas)}" class="empty-message">
+            No hay entregas registradas
+        </div>
     </div>
 
     <div class="info-section">
         <h3>Informes</h3>
-        <table>
-            <thead>
-            <tr>
-                <th>Número</th>
-                <th>Título</th>
-                <th>Descripción</th>
-                <th>Fecha</th>
-                <th>Archivo</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="informe : ${informes}">
-                <td th:text="${informe.id.numero}">1</td>
-                <td th:text="${informe.titulo}">Título del Informe</td>
-                <td th:text="${informe.descripcion}">Descripción del Informe</td>
-                <td th:text="${#temporals.format(informe.fecha, 'dd/MM/yyyy')}">Fecha</td>
-                <td>
-                    <a th:if="${informe.rutaArchivo != null}"
-                       th:href="@{/docente-supervisor/descargarInforme/{numero}/{estudianteDni}/{actividadNumero}/{planNumero}/{proyectoTitulo}/{proyectoCuit}(numero=${informe.id.numero}, estudianteDni=${informe.id.estudianteDni}, actividadNumero=${informe.actividad.actividadId.numero}, planNumero=${informe.actividad.actividadId.planDeTrabajoId.numero}, proyectoTitulo=${informe.actividad.actividadId.planDeTrabajoId.proyectoId.titulo}, proyectoCuit=${informe.actividad.actividadId.planDeTrabajoId.proyectoId.cuitEntidad})}"
-                       class="btn small">
-                        <i class="fas fa-download"></i> Descargar
-                    </a>
-                    <span th:unless="${informe.rutaArchivo != null}" class="no-file">Sin archivo</span>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <div th:if="${not #lists.isEmpty(informes)}">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Número</th>
+                        <th>Título</th>
+                        <th>Descripción</th>
+                        <th>Fecha</th>
+                        <th>Archivo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="informe : ${informes}">
+                        <td th:text="${informe.id?.numero ?: 'Sin asignar'}">1</td>
+                        <td th:text="${informe.titulo ?: 'Sin asignar'}">Título del Informe</td>
+                        <td th:text="${informe.descripcion ?: 'Sin asignar'}">Descripción del Informe</td>
+                        <td th:text="${informe.fecha != null ? #temporals.format(informe.fecha, 'dd/MM/yyyy') : 'Sin asignar'}">Fecha</td>
+                        <td>
+                            <a th:if="${informe.rutaArchivo != null && informe.id != null && informe.actividad != null && 
+                                     informe.actividad.actividadId != null && informe.actividad.actividadId.planDeTrabajoId != null && 
+                                     informe.actividad.actividadId.planDeTrabajoId.proyectoId != null}"
+                               th:href="@{/docente-supervisor/descargarInforme/{numero}/{estudianteDni}/{actividadNumero}/{planNumero}/{proyectoTitulo}/{proyectoCuit}(
+                                            numero=${informe.id.numero}, 
+                                            estudianteDni=${informe.id.estudianteDni}, 
+                                            actividadNumero=${informe.actividad.actividadId.numero}, 
+                                            planNumero=${informe.actividad.actividadId.planDeTrabajoId.numero}, 
+                                            proyectoTitulo=${informe.actividad.actividadId.planDeTrabajoId.proyectoId.titulo}, 
+                                            proyectoCuit=${informe.actividad.actividadId.planDeTrabajoId.proyectoId.cuitEntidad}
+                                        )}"
+                               class="btn small">
+                                <i class="fas fa-download"></i> Descargar
+                            </a>
+                            <span th:unless="${informe.rutaArchivo != null}" class="no-file">Sin archivo</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:unless="${not #lists.isEmpty(informes)}" class="empty-message">
+            No hay informes registrados
+        </div>
     </div>
 </div>
 
