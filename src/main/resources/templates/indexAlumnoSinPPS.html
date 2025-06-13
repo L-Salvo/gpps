@@ -491,8 +491,7 @@
                             </div>
                         </div>
                         <div class="pps-actions">
-                            <a th:href="@{/estudiante-sin-pps/proyecto/{cuit}/{titulo}(cuit=${proyecto.entidad.cuit}, titulo=${proyecto.titulo})}" class="btn primary">
-                            </a>
+
                             <form th:action="@{/estudiante-sin-pps/solicitud/{id}/cancelar(id=${proyecto.solicitudes != null and !proyecto.solicitudes.empty ? proyecto.solicitudes[0].id : ''})}" method="post" style="display: inline;">
                                 <button type="submit" class="btn secondary">
                                     <i class="fas fa-times"></i> Cancelar Solicitud
@@ -534,9 +533,7 @@
                             </div>
                         </div>
                         <div class="pps-actions">
-                            <a th:href="@{/estudiante-sin-pps/proyecto/{cuit}/{titulo}(cuit=${proyecto.entidad.cuit}, titulo=${proyecto.titulo})}" class="btn primary">
 
-                            </a>
                             <form th:action="@{/estudiante-sin-pps/proyecto/{cuit}/{titulo}/inscribirse(cuit=${proyecto.entidad.cuit}, titulo=${proyecto.titulo})}" method="post" style="display: inline;">
                                 <button type="submit" class="btn secondary">
                                     <i class="fas fa-plus"></i> Inscribirse
