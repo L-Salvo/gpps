@@ -5,6 +5,7 @@ import ing.gpps.entity.institucional.Proyecto;
 import ing.gpps.entity.idClasses.ProyectoId;
 import ing.gpps.entity.users.DocenteSupervisor;
 import ing.gpps.entity.users.Estudiante;
+import ing.gpps.entity.users.TutorExterno;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,6 +18,7 @@ import java.util.Optional;
 public interface ProyectoRepository extends JpaRepository<Proyecto, ProyectoId> {
     List<Proyecto> findByTutorUNRN(DocenteSupervisor tutor);
     Proyecto findByProyectoId_TituloAndProyectoId_CuitEntidad(String titulo, Long cuitEntidad);
+    List<Proyecto> findByTutorExterno(TutorExterno tutorExterno);
 
     @Query("SELECT p FROM Proyecto p WHERE p.estudiante.id = :estudianteId")
     List<Proyecto> findByEstudiante(@Param("estudianteId") Long estudianteId);

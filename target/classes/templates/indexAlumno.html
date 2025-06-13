@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPPS - Universidad Nacional de Río Negro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        header, footer {
+            background-color: #002642;
+            color: white;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo-container {
+            padding: 5px 0;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-name {
+            color: white;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+
+        .sub-header {
+            background-color: #001a33;
+            padding: 10px 20px;
+            border-bottom: 1px solid #004672;
+            color: white;
+        }
+
+        .propuesta {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .propuesta select {
+            padding: 5px 10px;
+            border: 1px solid #004672;
+            border-radius: 4px;
+            background-color: #002642;
+            color: white;
+        }
+
+        nav {
+            background-color: #003a63;
+            border-bottom: 1px solid #004672;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .main-menu {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+            padding: 0;
+            margin: 0;
+        }
+
+        .main-menu li a {
+            display: block;
+            padding: 15px 25px;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            font-size: 16px;
+            font-weight: 500;
+            text-align: center;
+            border-radius: 4px;
+        }
+
+        .main-menu li a:hover {
+            background-color: #003152;
+        }
+
+        .profile-menu {
+            padding: 15px 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-left: auto;
+        }
+
+        .profile-menu span {
+            font-weight: 500;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        section {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #002642;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #002642;
+            font-size: 1.5em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            color: #002642;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .btn {
+            background-color: #002642;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #004d8c;
+        }
+
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+            width: 100%;
+            padding: 5px;
+        }
+        
+        .btn.small {
+            padding: 6px 12px;
+            font-size: 0.9em;
+            white-space: nowrap;
+            width: 100%;
+            text-align: center;
+            min-width: 0;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .btn.small i {
+            font-size: 0.9em;
+        }
+
+        .btn.small:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .btn.small:active {
+            transform: translateY(0);
+        }
+
+        .entrega-status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-submitted { background-color: #e3f2fd; color: #1976d2; }
+        .status-approved { background-color: #e8f5e9; color: #2e7d32; }
+        .status-rejected { background-color: #ffebee; color: #c62828; }
+        .status-pending  { background-color: #fff3e0; color: #ef6c00; }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+        }
+
+        /* Estilos específicos para el dashboard */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+
+        .dashboard-card table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            table-layout: fixed;
+        }
+
+        .dashboard-card th,
+        .dashboard-card td {
+            padding: 12px 8px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            vertical-align: middle;
+        }
+
+        .dashboard-card th {
+            background-color: #f5f5f5;
+            font-weight: 600;
+            color: #333;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        /* Ajustes específicos para columnas */
+        .dashboard-card td:nth-child(1) { /* Número */
+            width: 60px;
+            min-width: 60px;
+            max-width: 60px;
+        }
+
+        .dashboard-card td:nth-child(2) { /* Título */
+            width: 150px;
+            min-width: 150px;
+        }
+
+        .dashboard-card td:nth-child(3) { /* Descripción */
+            width: 200px;
+            min-width: 200px;
+        }
+
+        .dashboard-card td:nth-child(4), /* Fecha Entrega */
+        .dashboard-card td:nth-child(5) { /* Fecha Límite */
+            width: 100px;
+            min-width: 100px;
+        }
+
+        .dashboard-card td:nth-child(6) { /* Estado */
+            width: 100px;
+            min-width: 100px;
+        }
+
+        .dashboard-card td:nth-child(7) { /* Archivo */
+            width: 100px;
+            min-width: 100px;
+        }
+
+        .dashboard-card td:nth-child(8) { /* Comentarios */
+            width: 150px;
+            min-width: 150px;
+        }
+
+        .dashboard-card td:last-child { /* Acciones */
+            width: 140px;
+            min-width: 140px;
+            max-width: 140px;
+            padding: 8px;
+        }
+        
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .btn.small {
+            padding: 5px 8px;
+            font-size: 0.85em;
+            white-space: nowrap;
+            width: 100%;
+            text-align: center;
+            min-width: 0;
+        }
+
+        /* Estilo para el texto truncado */
+        .truncate-text {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-height: 3em;
+            line-height: 1.5em;
+        }
+
+        /* Estilo para comentarios */
+        .comment-text {
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .comment-text:hover {
+            white-space: normal;
+            overflow: visible;
+            position: relative;
+            z-index: 2;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 5px;
+            border-radius: 4px;
+        }
+
+        /* Estilos para los modales */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 550px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            max-height: 90vh;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
+
+        /* Estilos para formularios */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input[type="text"],
+        .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        /* Estilos para mensajes de alerta */
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+
+        .alert-danger {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        aa
+        .notification-container {
+    position: relative;
+}
+
+.notification-icon {
+    cursor: pointer;
+    position: relative;
+    padding: 5px;
+}
+
+.notification-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: red;
+    color: white;
+    font-size: 0.7em;
+    padding: 2px 6px;
+    border-radius: 50%;
+}
+
+.notification-dropdown {
+    position: absolute;
+    right: 0;
+    top: 35px;
+    background: white;
+    color: black;
+    width: 300px;
+    max-height: 400px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.notificacion-lista {
+    padding: 10px;
+}
+
+.notificacion-item {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    font-size: 0.9em;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.notificacion-item.unread {
+    font-weight: bold;
+    background-color: #f0f8ff;
+}
+
+.notificacion-item i {
+    margin-top: 2px;
+}
+
+.notificacion-footer {
+    padding: 10px;
+    text-align: center;
+    background-color: #f8f9fa;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.btn-cancel {
+    background-color: #6c757d;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-cancel:hover {
+    background-color: #5a6268;
+}
+
+.file-upload-container {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+    margin-top: 10px;
+}
+
+.file-upload-container:hover {
+    border-color: #002642;
+    background-color: #f0f0f0;
+}
+
+.file-name {
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.file-help {
+    display: block;
+    margin-top: 5px;
+    color: #666;
+    font-size: 0.8em;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+.form-group input[type="text"]:focus,
+.form-group textarea:focus {
+    border-color: #002642;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 38, 66, 0.1);
+}
+
+.btn-submit {
+    background-color: #002642;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: #004d8c;
+}
+
+.text-muted {
+    color: #9e9e9e !important;
+    font-style: italic;
+    font-size: 0.9em;
+}
+
+.no-data {
+    color: #9e9e9e;
+    font-style: italic;
+    font-size: 0.9em;
+}
+
+.comment-badge {
+    background-color: #e3f2fd;
+    color: #1976d2;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    display: inline-block;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.no-comment {
+    color: #757575;
+    font-style: italic;
+    font-size: 0.9em;
+}
+
+.info-section {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 12px;
+    margin-bottom: 15px;
+    width: fit-content;
+    min-width: 300px;
+    max-width: 100%;
+}
+
+.info-section h3 {
+    color: #004d8c;
+    margin-bottom: 8px;
+    font-size: 1.1em;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #e3f2fd;
+}
+
+.info-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9em;
+}
+
+.info-table th {
+    background-color: #f8f9fa;
+    color: #004d8c;
+    padding: 6px 8px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 1px solid #e3f2fd;
+    width: 100px;
+    white-space: nowrap;
+}
+
+.info-table td {
+    padding: 6px 8px;
+    border-bottom: 1px solid #e3f2fd;
+}
+
+.info-table tr:last-child td {
+    border-bottom: none;
+}
+
+.tutor-section {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #e3f2fd;
+}
+
+.progress-text {
+    color: #004d8c;
+    font-weight: 600;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: #e3f2fd;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 5px;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background-color: #004d8c;
+    transition: width 0.3s ease;
+}
+
+.tutor-info {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #e3f2fd;
+}
+
+.tutor-info h4 {
+    color: #004d8c;
+    margin-bottom: 15px;
+    font-size: 1.1em;
+}
+
+.tutor-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9em;
+}
+
+.tutor-table th {
+    background-color: #f8f9fa;
+    color: #004d8c;
+    padding: 8px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 1px solid #e3f2fd;
+}
+
+.tutor-table td {
+    padding: 8px;
+    border-bottom: 1px solid #e3f2fd;
+}
+
+.tutor-table tr:last-child td {
+    border-bottom: none;
+}
+
+.tutor-section h3 {
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 1.1em;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #e3f2fd;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo-container">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-So2CHeud6JF1xVNp1LlSIuwt3sgVUg.png" width=70 alt="Logo UNRN" class="logoUNRN">
+                <img src="https://lh3.googleusercontent.com/a-/ALV-UjVX7tQfNfC44NY6OR_Fwc7MJze4ucpzRbw1lXa0yPCWLi6cuJkC=s129-p-k-rw-no" width=100 alt="Logo LIA" class="logoLIA">
+            </div>
+            <div class="user-info">
+                <div class="user-dropdown">
+                    <span class="user-name" th:text="${estudiante.nombre + ' ' + estudiante.apellido + ' 👨‍🎓'}">Nombre Estudiante 👨‍🎓</span>
+                </div>
+            </div>
+        </div>
+        <div class="sub-header">
+            <div class="propuesta">
+                <span>Propuesta:</span>
+                <form id="logoutForm" th:action="@{/logout}" method="post" style="display:none;"></form>
+                <select id="admin-select" onchange="if(this.value==='logout'){document.getElementById('logoutForm').submit();}" title="Menú de opciones">
+                    <option value="admin">Estudiante</option>
+                    <option value="logout">Cerrar sesión</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <ul class="main-menu">
+                <li><a href="#proyecto">Mi Proyecto</a></li>
+                <li><a href="#actividades">Actividades</a></li>
+                <li><a href="#entregas">Entregas</a></li>
+            </ul>
+            <div class="profile-menu">
+
+                <div class="notification-container">
+                    <div class="notification-icon" style="position: relative; cursor: pointer;">
+                        <i class="fas fa-bell"></i>
+                        <span id="notificacion-count" style="
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: red;
+        color: white;
+        border-radius: 50%;
+        padding: 2px 6px;
+        font-size: 12px;
+        display: none;">0</span>
+                    </div>
+
+                    <div id="notification-dropdown" class="dropdown-content" style="display:none; position:absolute; right:0; top:100%; background:white; border:1px solid #ccc; width:300px; max-height:400px; overflow-y:auto; box-shadow:0px 2px 10px rgba(0,0,0,0.1); z-index:100;">
+                        <div id="notificacion-lista" style="padding:10px;">
+                            <!-- Aquí se llenan las notificaciones dinámicamente -->
+                        </div>
+                    </div>
+
+                </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="main-content">
+            <!-- Mensajes de error y éxito -->
+            <div th:if="${error}" class="alert alert-danger">
+                <i class="fas fa-exclamation-circle"></i>
+                <span th:text="${error}"></span>
+            </div>
+            <div th:if="${success}" class="alert alert-success">
+                <i class="fas fa-check-circle"></i>
+                <span th:text="${success}"></span>
+            </div>
+
+            <!-- Resto del contenido -->
+            <div class="dashboard-header">
+                <h2>Panel de Alumno</h2>
+            </div>
+
+            <!-- Sección de Proyecto -->
+            <section id="proyecto-info" class="dashboard-card">
+                <h3>Información del Proyecto</h3>
+                <div th:if="${proyecto != null}" class="info-section">
+                    <table class="info-table">
+                        <tr>
+                            <th>Título</th>
+                            <td th:text="${proyecto.titulo}">Título del Proyecto</td>
+                        </tr>
+                        <tr>
+                            <th>Descripción</th>
+                            <td th:text="${proyecto.descripcion}">Descripción del Proyecto</td>
+                        </tr>
+                        <tr>
+                            <th>Entidad</th>
+                            <td th:text="${proyecto.entidad.nombre}">Nombre de la Entidad</td>
+                        </tr>
+                        <tr>
+                            <th>Progreso</th>
+                            <td>
+                                <span class="progress-text" th:text="${progreso + '%'}">0%</span>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div class="tutor-section">
+                        <h3>Docente Supervisor</h3>
+                        <table class="info-table">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>Email</th>
+                                    <th>Teléfono</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:if="${proyecto.tutorUNRN != null}">
+                                    <td th:text="${proyecto.tutorUNRN.nombre ?: 'N/A'}">Nombre Docente</td>
+                                    <td th:text="${proyecto.tutorUNRN.apellido ?: 'N/A'}">Apellido Docente</td>
+                                    <td th:text="${proyecto.tutorUNRN.email ?: 'N/A'}">email@unrn.edu.ar</td>
+                                    <td th:text="${proyecto.tutorUNRN.numTelefono ?: 'N/A'}">Teléfono Docente</td>
+                                </tr>
+                                <tr th:unless="${proyecto.tutorUNRN != null}">
+                                    <td colspan="4" class="no-data">No hay Docente Supervisor asignado a este proyecto.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div th:unless="${proyecto != null}" class="no-data">
+                    No hay proyecto asignado.
+                </div>
+            </section>
+
+            <!-- Sección de Actividades -->
+            <section id="actividades">
+                <h2>Actividades</h2>
+                <div class="dashboard-card">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Título</th>
+                                <th>Descripción</th>
+                                <th>Fecha Limite</th>
+                                <th>Archivo</th>
+                                <th>Comentarios</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="actividad : ${actividades}">
+                                <td th:text="${actividad.nombre}">Título</td>
+                                <td class="text-truncate" style="max-width: 200px;" th:text="${actividad.descripcion}">Descripción</td>
+                                <td th:text="${#temporals.format(actividad.fechaLimite, 'dd/MM/yyyy')}">Fecha</td>
+                                <td>
+                                    <a th:if="${actividad.rutaArchivo != null}" th:href="@{/estudiante/descargarActividad/{numero}/{planNumero}/{proyectoTitulo}/{proyectoCuit}(numero=${actividad.actividadId.numero}, planNumero=${actividad.actividadId.planDeTrabajoId.numero}, proyectoTitulo=${actividad.actividadId.planDeTrabajoId.proyectoId.titulo}, proyectoCuit=${actividad.actividadId.planDeTrabajoId.proyectoId.cuitEntidad})}" class="btn btn-sm btn-primary">
+                                        <i class="fas fa-download"></i> Descargar
+                                    </a>
+                                    <span th:unless="${actividad.rutaArchivo != null}" class="no-data">Sin archivo</span>
+                                </td>
+                                <td>
+                                    <span th:if="${actividad.comentarios != null && !actividad.comentarios.isEmpty()}" 
+                                          class="comment-badge" 
+                                          th:text="${actividad.comentarios}">Comentarios</span>
+                                    <span th:unless="${actividad.comentarios != null && !actividad.comentarios.isEmpty()}" 
+                                          class="no-comment">Sin comentarios</span>
+                                </td>
+                                <td>
+                                    <span class="entrega-status" th:classappend="${actividad.estado == 'COMPLETADA' ? 'status-approved' : 'status-pending'}"
+                                          th:text="${actividad.estado}">Estado</span>
+                                </td>
+                                <td>
+                                    <div class="btn-container">
+                                        <button class="btn btn-sm btn-primary small" th:onclick="'abrirModalSubirEntrega(' + ${actividad.actividadId.numero} + ')'">
+                                            <i class="fas fa-upload"></i> Subir Entrega
+                                        </button>
+                                        <button class="btn btn-sm btn-info small" 
+                                                th:data-actividad-numero="${actividad.actividadId.numero}"
+                                                th:data-plan-numero="${actividad.actividadId.planDeTrabajoId.numero}"
+                                                th:data-proyecto-titulo="${actividad.actividadId.planDeTrabajoId.proyectoId.titulo}"
+                                                th:data-proyecto-cuit="${actividad.actividadId.planDeTrabajoId.proyectoId.cuitEntidad}"
+                                                onclick="abrirModalInforme(this)">
+                                            <i class="fas fa-file-alt"></i> Crear Informe
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Sección de Entregas -->
+            <section id="entregas">
+                <h2>Entregas</h2>
+                <div class="dashboard-card">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Título</th>
+                                <th>Descripción</th>
+                                <th>Fecha Subida</th>
+                                <th>Archivo</th>
+                                <th>Comentarios</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="entrega : ${entregas}">
+                                <td th:text="${entrega.titulo}">Título</td>
+                                <td class="text-truncate" style="max-width: 200px;" th:text="${entrega.descripcion}">Descripción</td>
+                                <td th:text="${#temporals.format(entrega.fechaEntrega, 'dd/MM/yyyy')}">Fecha</td>
+                                <td>
+                                    <a th:if="${entrega.rutaArchivo != null}" th:href="@{/estudiante/descargarEntrega/{id}(id=${entrega.id})}" class="btn btn-sm btn-primary">
+                                        <i class="fas fa-download"></i> Descargar
+                                    </a>
+                                    <span th:unless="${entrega.rutaArchivo != null}" class="no-data">Sin archivo</span>
+                                </td>
+                                <td>
+                                    <span th:if="${entrega.comentarios != null && !entrega.comentarios.isEmpty()}" 
+                                          class="comment-badge" 
+                                          th:text="${entrega.comentarios}">Comentarios</span>
+                                    <span th:unless="${entrega.comentarios != null && !entrega.comentarios.isEmpty()}" 
+                                          class="no-comment">Sin comentarios</span>
+                                </td>
+                                <td>
+                                    <span class="entrega-status" th:classappend="${entrega.estado == 'APROBADO' ? 'status-approved' : (entrega.estado == 'RECHAZADO' ? 'status-rejected' : 'status-pending')}"
+                                          th:text="${entrega.estado}">Estado</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Sección de Informes -->
+            <section id="informes">
+                <h2>Informes</h2>
+                <div class="dashboard-card">
+                    <h3>Informes</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Título</th>
+                                <th>Descripción</th>
+                                <th>Fecha</th>
+                                <th>Archivo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="informe : ${informes}">
+                                <td th:text="${informe.titulo}">Título</td>
+                                <td class="text-truncate" style="max-width: 200px;" th:text="${informe.descripcion}">Descripción</td>
+                                <td th:text="${#temporals.format(informe.fecha, 'dd/MM/yyyy')}">Fecha</td>
+                                <td>
+                                    <a th:if="${informe.rutaArchivo != null}" th:href="@{/estudiante/descargarInforme/{numero}/{estudianteDni}(numero=${informe.id.numero}, estudianteDni=${informe.id.estudianteDni})}" class="btn btn-sm btn-primary">
+                                        <i class="fas fa-download"></i> Descargar
+                                    </a>
+                                    <span th:unless="${informe.rutaArchivo != null}" class="no-data">Sin archivo</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Modal para crear informe -->
+            <div id="modalInforme" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Crear Informe</h3>
+                        <span class="close" onclick="cerrarModal('modalInforme')">&times;</span>
+                    </div>
+                    <form id="formInforme" th:action="@{/estudiante/crearInforme}" method="post" enctype="multipart/form-data">
+                        <input type="hidden" id="actividadNumero" name="actividadNumero">
+                        <input type="hidden" id="planNumero" name="planNumero">
+                        <input type="hidden" id="proyectoTitulo" name="proyectoTitulo">
+                        <input type="hidden" id="proyectoCuit" name="proyectoCuit">
+                        <input type="hidden" id="numero" name="numero" th:value="${informes != null ? informes.size() + 1 : 1}">
+                        
+                        <div class="form-group">
+                            <label for="tituloInforme">Título del Informe</label>
+                            <input type="text" id="tituloInforme" name="titulo" required 
+                                   placeholder="Ingrese el título del informe">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="descripcionInforme">Descripción</label>
+                            <textarea id="descripcionInforme" name="descripcion" required 
+                                      placeholder="Ingrese la descripción del informe"
+                                      rows="4"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="archivoInforme">Archivo (opcional)</label>
+                            <input type="file" id="archivoInforme" name="archivo" accept=".pdf,.doc,.docx">
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Crear Informe</button>
+                            <button type="button" class="btn btn-secondary" onclick="cerrarModal('modalInforme')">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal para Subir Entrega -->
+            <div id="uploadModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Subir Entrega</h2>
+                    <form id="uploadForm" th:action="@{/estudiante/subirEntrega}" method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="titulo">Título:</label>
+                            <input type="text" id="titulo" name="titulo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="descripcion">Descripción:</label>
+                            <textarea id="descripcion" name="descripcion" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="actividadId">Actividad:</label>
+                            <select id="actividadId" name="actividadId" required>
+                                <option value="">Seleccione una actividad</option>
+                                <option th:each="actividad : ${actividades}"
+                                        th:value="${actividad.actividadId.numero}"
+                                        th:text="${actividad.nombre}">Actividad</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="archivo">Archivo:</label>
+                            <input type="file" id="archivo" name="archivo" required>
+                            <p id="fileName" class="file-name"></p>
+                        </div>
+                        <button type="submit" class="btn-submit">
+                            <i class="fas fa-upload"></i>
+                            Subir Entrega
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Universidad Nacional de Río Negro - GPPS</p>
+        </div>
+    </footer>
+
+    <script>
+        function crearInforme(actividadId) {
+            console.log('Crear informe llamado con actividadId:', actividadId);
+            document.getElementById('actividadId').value = actividadId;
+            document.getElementById('modalInforme').style.display = 'block';
+        }
+
+        function cerrarModal(modalId) {
+            console.log('Cerrando modal:', modalId);
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Cerrar modal cuando se hace clic fuera de él
+        window.onclick = function(event) {
+            if (event.target.className === 'modal') {
+                event.target.style.display = 'none';
+            }
+        }
+
+        // Obtener elementos del DOM
+        const modal = document.getElementById("uploadModal");
+        const span = document.getElementsByClassName("close")[0];
+        const uploadForm = document.getElementById("uploadForm");
+        const fileInput = document.getElementById("archivo");
+        const fileNameDisplay = document.getElementById("fileName");
+
+        // Función para abrir el modal
+        function abrirModalSubirEntrega(actividadId = null) {
+            if (actividadId) {
+                document.getElementById('actividadId').value = actividadId;
+            }
+            modal.style.display = "block";
+        }
+
+        // Cerrar modal con el botón X
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // Cerrar modal al hacer clic fuera
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Mostrar nombre del archivo seleccionado
+        fileInput.addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name || 'Ningún archivo seleccionado';
+            fileNameDisplay.textContent = fileName;
+        });
+
+        // Manejar el envío del formulario
+        uploadForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            
+            fetch(this.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la respuesta del servidor');
+                }
+                return response.text();
+            })
+            .then(result => {
+                if (result === 'success') {
+                    alert('Entrega subida exitosamente');
+                    modal.style.display = "none";
+                    window.location.reload();
+                } else {
+                    alert('Error al subir la entrega: ' + result);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al subir la entrega. Por favor, intente nuevamente.');
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const iconoCampana = document.querySelector(".notification-icon");
+            const dropdown = document.getElementById("notification-dropdown");
+            const badge = document.getElementById("notificacion-count");
+
+            // Toggle dropdown
+            iconoCampana.addEventListener("click", function () {
+                dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
+            });
+
+            // Cerrar el dropdown si se clickea fuera
+            window.addEventListener("click", function (e) {
+                if (!iconoCampana.contains(e.target)) {
+                    dropdown.style.display = "none";
+                }
+            });
+
+            // Cargar notificaciones
+            fetch('/api/notificaciones/usuario')
+                .then(res => res.json())
+                .then(data => {
+                    const lista = document.getElementById("notificacion-lista");
+                    lista.innerHTML = '';
+
+                    if (data.notificaciones.length === 0) {
+                        lista.innerHTML = "<p style='text-align:center;'>Sin notificaciones</p>";
+                    } else {
+                        data.notificaciones.forEach(n => {
+                            const item = document.createElement("div");
+                            item.className = "notificacion-item" + (n.leida ? "" : " unread");
+                            item.innerHTML = `
+                                <i class="${n.iconoTipo}" style="color: ${n.colorTipo};"></i>
+                                <div>
+                                    <div>${n.mensaje}</div>
+                                    <small>${n.fechaCreacionFormateada}</small>
+                                </div>
+                            `;
+                            lista.appendChild(item);
+                        });
+                    }
+
+                    if (data.noLeidas > 0) {
+                        badge.innerText = data.noLeidas;
+                        badge.style.display = "inline-block";
+                    }
+                })
+                .catch(err => console.error("Error al cargar notificaciones:", err));
+        });
+
+        function marcarTodasLeidas() {
+            fetch('/api/notificaciones/marcar-todas-leidas', {
+                method: 'POST'
+            }).then(() => location.reload());
+        }
+    </script>
+
+    <script>
+        function abrirModalInforme(button) {
+            // Obtener los datos del botón
+            const actividadNumero = button.getAttribute('data-actividad-numero');
+            const planNumero = button.getAttribute('data-plan-numero');
+            const proyectoTitulo = button.getAttribute('data-proyecto-titulo');
+            const proyectoCuit = button.getAttribute('data-proyecto-cuit');
+            
+            console.log('Abriendo modal de informe con datos:', {
+                actividadNumero,
+                planNumero,
+                proyectoTitulo,
+                proyectoCuit
+            });
+            
+            // Validar que todos los parámetros sean válidos
+            if (!actividadNumero || !planNumero || !proyectoTitulo || !proyectoCuit) {
+                console.error('Faltan parámetros requeridos');
+                return;
+            }
+            
+            // Establecer los valores en el formulario
+            document.getElementById('actividadNumero').value = actividadNumero;
+            document.getElementById('planNumero').value = planNumero;
+            document.getElementById('proyectoTitulo').value = proyectoTitulo;
+            document.getElementById('proyectoCuit').value = proyectoCuit;
+            
+            // Mostrar el modal
+            document.getElementById('modalInforme').style.display = 'block';
+        }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const icon = document.querySelector(".notification-icon");
+            const dropdown = document.getElementById("notification-dropdown");
+            const lista = document.getElementById("notificacion-lista");
+            const contador = document.getElementById("notificacion-count");
+
+            icon.addEventListener("click", async () => {
+                dropdown.classList.toggle("show");
+
+                try {
+                    const res = await fetch("/api/notificaciones/usuario");
+                    const data = await res.json();
+
+                    lista.innerHTML = "";
+                    data.notificaciones.forEach(n => {
+                        const item = document.createElement("div");
+                        item.className = "notificacion-item" + (n.leida ? "" : " unread");
+                        item.innerHTML = `
+                            <i class="${n.iconoTipo}"></i>
+                            <div>
+                                <strong>${n.tipo.replace(/_/g, ' ')}</strong><br>
+                                <span>${n.mensaje}</span><br>
+                                <small>${n.fechaCreacionFormateada}</small>
+                            </div>
+                        `;
+                        lista.appendChild(item);
+                    });
+
+                    if (data.noLeidas > 0) {
+                        contador.style.display = "inline-block";
+                        contador.textContent = data.noLeidas;
+                    } else {
+                        contador.style.display = "none";
+                    }
+                } catch (error) {
+                    console.error("Error al cargar notificaciones:", error);
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

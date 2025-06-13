@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPPS - Universidad Nacional de Río Negro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Estilos generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Encabezado */
+        header {
+            background-color: #002642;
+            color: white;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo-container {
+            padding: 5px 0;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-name {
+            color: white;
+            font-weight: bold;
+        }
+
+        .sub-header {
+            background-color: #001a33;
+            padding: 10px 20px;
+            border-bottom: 1px solid #004672;
+            color: white;
+        }
+
+        .propuesta {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .propuesta select {
+            padding: 5px 10px;
+            border: 1px solid #004672;
+            border-radius: 4px;
+            background-color: #002642;
+            color: white;
+        }
+
+        /* Navegación */
+        nav {
+            background-color: #003a63;
+            border-bottom: 1px solid #004672;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .main-menu {
+            display: flex;
+            list-style: none;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .profile-menu {
+            padding: 15px 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icon-separator {
+            width: 1px;
+            height: 20px;
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Contenido principal */
+        main {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            color: #002642;
+            margin-bottom: 30px;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .dashboard-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        /* Estilos para las PPS */
+        .pps-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .pps-card {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 30px;
+            padding: 25px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            transition: all 0.2s ease;
+        }
+
+        .pps-card:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border-color: #002642;
+        }
+
+        .pps-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .pps-title {
+            font-weight: 600;
+            color: #002642;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .pps-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding-right: 20px;
+        }
+
+        .pps-detail {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .detail-label {
+            font-size: 0.85em;
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        .detail-value {
+            font-size: 0.95em;
+            color: #002642;
+        }
+
+        .pps-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            justify-content: center;
+            min-width: 140px;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn.primary {
+            background-color: #002642;
+            color: white;
+        }
+
+        .btn.primary:hover {
+            background-color: #001a33;
+        }
+
+        .btn.secondary {
+            background-color: #e50019;
+            color: white;
+        }
+
+        .btn.secondary:hover {
+            background-color: #cc0017;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #002642;
+            color: white;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+                padding: 0 15px;
+            }
+
+            .pps-card {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .pps-actions {
+                flex-direction: row;
+                justify-content: flex-start;
+                min-width: auto;
+            }
+
+            .btn {
+                width: auto;
+            }
+
+            .pps-details {
+                padding-right: 0;
+            }
+        }
+
+        .pps-card.inscripto {
+            border-left: 4px solid #e50019;
+            background-color: #fff;
+        }
+
+        .pps-card.inscripto .pps-title {
+            color: #e50019;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .status-badge.pendiente {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-badge i {
+            font-size: 0.9em;
+        }
+
+        .status-info {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e9ecef;
+            font-size: 0.9em;
+            color: #6c757d;
+        }
+
+        .status-info p {
+            margin-bottom: 5px;
+        }
+
+        .status-info strong {
+            color: #002642;
+        }
+
+        aa.notification-container {
+            position: relative;
+        }
+
+        .notification-icon {
+            cursor: pointer;
+            position: relative;
+            padding: 5px;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: red;
+            color: white;
+            font-size: 0.7em;
+            padding: 2px 6px;
+            border-radius: 50%;
+        }
+
+        .notification-dropdown {
+            position: absolute;
+            right: 0;
+            top: 35px;
+            background: white;
+            color: black;
+            width: 300px;
+            max-height: 400px;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .notificacion-lista {
+            padding: 10px;
+        }
+
+        .notificacion-item {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            font-size: 0.9em;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .notificacion-item.unread {
+            font-weight: bold;
+            background-color: #f0f8ff;
+        }
+
+        .notificacion-item i {
+            margin-top: 2px;
+        }
+
+        .notificacion-footer {
+            padding: 10px;
+            text-align: center;
+            background-color: #f8f9fa;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo-container">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-So2CHeud6JF1xVNp1LlSIuwt3sgVUg.png" width=70 alt="Logo UNRN" class="logoUNRN">
+                <img src="https://lh3.googleusercontent.com/a-/ALV-UjVX7tQfNfC44NY6OR_Fwc7MJze4ucpzRbw1lXa0yPCWLi6cuJkC=s129-p-k-rw-no" width=100 alt="Logo LIA" class="logoLIA">
+            </div>
+            <div class="user-info">
+                <div class="user-dropdown">
+                    <span class="user-name" th:text="${estudiante.nombre + ' ' + estudiante.apellido + ' (UNRN-' + estudiante.legajo + ') 🎓'}">Maximo Porretti (UNRN-45082) 🎓</span>
+                </div>
+            </div>
+        </div>
+        <div class="sub-header">
+            <div class="propuesta">
+                <span>Propuesta:</span>
+                <form id="logoutForm" th:action="@{/logout}" method="post" style="display:none;"></form>
+                <select id="admin-select" onchange="if(this.value==='logout'){document.getElementById('logoutForm').submit();}">
+                    <option value="admin">Estudiante</option>
+                    <option value="logout">Cerrar sesión</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <ul class="main-menu">
+        </ul>
+        <div class="profile-menu">
+            <div class="notification-container">
+    <span class="notification-icon">
+        <i class="fas fa-bell"></i>
+        <span class="notification-badge" id="notificacion-count" style="display:none;">0</span>
+    </span>
+                <div class="notification-dropdown" id="notification-dropdown" style="display: none;">
+                    <div id="notificacion-lista" class="notificacion-lista">
+                        <p style="text-align:center; padding: 10px;">Cargando notificaciones...</p>
+                    </div>
+                    <div class="notificacion-footer">
+                        <button class="btn secondary" onclick="marcarTodasLeidas()">Marcar todas como leídas</button>
+                    </div>
+                </div>
+            </div>
+
+            <span class="icon-separator"></span>
+            <span><i class="fas fa-envelope"></i></span>
+            <span class="icon-separator"></span>
+        </div>
+    </nav>
+
+    <main>
+        <h1>Prácticas Profesionales Supervisadas Disponibles</h1>
+        
+        <div class="dashboard">
+            <div class="dashboard-card">
+                <div class="pps-list">
+                    <!-- Proyectos Postulados -->
+                    <div th:if="${proyectosPostulados != null and !proyectosPostulados.empty}" th:each="proyecto : ${proyectosPostulados}" class="pps-card">
+                        <div th:text="${'Proyecto postulado: ' + proyecto.titulo}" style="display: none;"></div>
+                        <div class="pps-info">
+                            <div class="status-badge pendiente">
+                                <i class="fas fa-clock"></i>
+                                En proceso de aceptación
+                            </div>
+                            <div class="pps-title" th:text="${proyecto.titulo}">Desarrollo de Aplicación de Ventas</div>
+                            <div class="pps-details">
+                                <div class="pps-detail">
+                                    <span class="detail-label">Entidad</span>
+                                    <span class="detail-value" th:text="${proyecto.entidad.nombre}">Empresa Altec</span>
+                                </div>
+                                <div class="pps-detail">
+                                    <span class="detail-label">Tutor UNRN</span>
+                                    <span class="detail-value" th:text="${proyecto.tutorUNRN != null ? proyecto.tutorUNRN.nombre + ' ' + proyecto.tutorUNRN.apellido : 'No asignado'}">Dra. María González</span>
+                                </div>
+                                <div class="pps-detail">
+                                    <span class="detail-label">Tutor Externo</span>
+                                    <span class="detail-value" th:text="${proyecto.tutorExterno != null ? proyecto.tutorExterno.nombre + ' ' + proyecto.tutorExterno.apellido : 'No asignado'}">Ing. Juan Pérez</span>
+                                </div>
+                                <div class="pps-detail">
+                                    <span class="detail-label">Fecha de inicio</span>
+                                    <span class="detail-value" th:text="${proyecto.planDeTrabajo != null ? #temporals.format(proyecto.planDeTrabajo.fechaInicio, 'dd/MM/yyyy') : 'No definida'}">15/03/2025</span>
+                                </div>
+                                <div class="pps-detail">
+                                    <span class="detail-label">Duración estimada</span>
+                                    <span class="detail-value" th:text="${proyecto.planDeTrabajo != null ? 'Del ' + #temporals.format(proyecto.planDeTrabajo.fechaInicio, 'dd/MM/yyyy') + ' al ' + #temporals.format(proyecto.planDeTrabajo.fechaFin, 'dd/MM/yyyy') : 'No definida'}">3 meses</span>
+                                </div>
+                                <div class="pps-detail">
+                                    <span class="detail-label">Postulantes</span>
+                                    <span class="detail-value" th:text="${cantidadPostulantes != null ? (cantidadPostulantes.get(proyecto) != null ? cantidadPostulantes.get(proyecto) : 0) : 0}">0</span>
+                                </div>
+                            </div>
+                            <div class="status-info">
+                                <p><strong>Estado actual:</strong> En revisión por el tutor UNRN</p>
+                                <p><strong>Fecha de solicitud:</strong> <span th:text="${proyecto.solicitudes != null and !proyecto.solicitudes.empty ? #temporals.format(proyecto.solicitudes[0].fechaSolicitud, 'dd/MM/yyyy') : 'No disponible'}">01/03/2025</span></p>
+                                <p><strong>Tiempo estimado de respuesta:</strong> 5 días hábiles</p>
+                            </div>
+                        </div>
+                        <div class="pps-actions">
+
+                            <form th:action="@{/estudiante-sin-pps/solicitud/{id}/cancelar(id=${proyecto.solicitudes != null and !proyecto.solicitudes.empty ? proyecto.solicitudes[0].id : ''})}" method="post" style="display: inline;">
+                                <button type="submit" class="btn secondary">
+                                    <i class="fas fa-times"></i> Cancelar Solicitud
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Proyectos Disponibles -->
+                    <div th:if="${proyectosDisponibles != null and !proyectosDisponibles.empty}" th:each="proyecto : ${proyectosDisponibles}" class="pps-card" th:unless="${proyectosPostulados != null and !proyectosPostulados.empty and proyectosPostulados.contains(proyecto)}">
+                        <div th:text="${'Proyecto disponible: ' + proyecto.titulo}" style="display: none;"></div>
+                        <div class="pps-info">
+                            <div class="pps-title" th:text="${proyecto.titulo}">Implementación de Sistema de Turnos Online</div>
+                            <div class="pps-details">
+                                <div class="pps-detail">
+                                    <span class="detail-label">Entidad</span>
+                                    <span class="detail-value" th:text="${proyecto.entidad.nombre}">Clínica Patagonia</span>
+                                </div>
+                                <div class="pps-detail">
+                                    <span class="detail-label">Tutor UNRN</span>
+                                    <span class="detail-value" th:text="${proyecto.tutorUNRN != null ? proyecto.tutorUNRN.nombre + ' ' + proyecto.tutorUNRN.apellido : 'No asignado'}">Lic. Paula Díaz</span>
+                                </div>
+                                <div class="pps-detail">
+                                    <span class="detail-label">Tutor Externo</span>
+                                    <span class="detail-value" th:text="${proyecto.tutorExterno != null ? proyecto.tutorExterno.nombre + ' ' + proyecto.tutorExterno.apellido : 'No asignado'}">Ing. Roberto Álvarez</span>
+                                </div>
+                                <div class="pps-detail">
+                                    <span class="detail-label">Fecha de inicio</span>
+                                    <span class="detail-value" th:text="${proyecto.planDeTrabajo != null ? #temporals.format(proyecto.planDeTrabajo.fechaInicio, 'dd/MM/yyyy') : 'No definida'}">01/04/2025</span>
+                                </div>
+                                <div class="pps-detail">
+                                    <span class="detail-label">Duración estimada</span>
+                                    <span class="detail-value" th:text="${proyecto.planDeTrabajo != null ? 'Del ' + #temporals.format(proyecto.planDeTrabajo.fechaInicio, 'dd/MM/yyyy') + ' al ' + #temporals.format(proyecto.planDeTrabajo.fechaFin, 'dd/MM/yyyy') : 'No definida'}">4 meses</span>
+                                </div>
+                                <div class="pps-detail">
+                                    <span class="detail-label">Postulantes</span>
+                                    <span class="detail-value" th:text="${cantidadPostulantes != null ? (cantidadPostulantes.get(proyecto) != null ? cantidadPostulantes.get(proyecto) : 0) : 0}">0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pps-actions">
+
+                            <form th:action="@{/estudiante-sin-pps/proyecto/{cuit}/{titulo}/inscribirse(cuit=${proyecto.entidad.cuit}, titulo=${proyecto.titulo})}" method="post" style="display: inline;">
+                                <button type="submit" class="btn secondary">
+                                    <i class="fas fa-plus"></i> Inscribirse
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Mensaje cuando no hay proyectos -->
+                    <div th:if="${(proyectosPostulados == null or proyectosPostulados.empty) and (proyectosDisponibles == null or proyectosDisponibles.empty)}" class="pps-card" style="text-align: center; padding: 40px;">
+                        <p style="color: #6c757d; font-size: 1.1em;">No hay proyectos disponibles en este momento</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Universidad Nacional de Río Negro - Sistema de Gestión de Prácticas Profesionales Supervisadas</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('admin-select').addEventListener('change', function() {
+            if (this.value === 'logout') {
+                document.getElementById('logoutForm').submit();
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const iconoCampana = document.querySelector(".notification-icon");
+            const dropdown = document.getElementById("notification-dropdown");
+            const badge = document.getElementById("notificacion-count");
+
+            // Toggle dropdown
+            iconoCampana.addEventListener("click", function () {
+                dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
+            });
+
+            // Cerrar el dropdown si se clickea fuera
+            window.addEventListener("click", function (e) {
+                if (!iconoCampana.contains(e.target)) {
+                    dropdown.style.display = "none";
+                }
+            });
+
+            // Cargar notificaciones
+            fetch('/api/notificaciones/usuario')
+                .then(res => res.json())
+                .then(data => {
+                    const lista = document.getElementById("notificacion-lista");
+                    lista.innerHTML = '';
+
+                    if (data.notificaciones.length === 0) {
+                        lista.innerHTML = "<p style='text-align:center;'>Sin notificaciones</p>";
+                    } else {
+                        data.notificaciones.forEach(n => {
+                            const item = document.createElement("div");
+                            item.className = "notificacion-item" + (n.leida ? "" : " unread");
+                            item.innerHTML = `
+                                <i class="${n.iconoTipo}" style="color: ${n.colorTipo};"></i>
+                                <div>
+                                    <div>${n.mensaje}</div>
+                                    <small>${n.fechaCreacionFormateada}</small>
+                                </div>
+                            `;
+                            lista.appendChild(item);
+                        });
+                    }
+
+                    if (data.noLeidas > 0) {
+                        badge.innerText = data.noLeidas;
+                        badge.style.display = "inline-block";
+                    }
+                })
+                .catch(err => console.error("Error al cargar notificaciones:", err));
+        });
+
+        function marcarTodasLeidas() {
+            fetch('/api/notificaciones/marcar-todas-leidas', {
+                method: 'POST'
+            }).then(() => location.reload());
+        }
+    </script>
+
+</body>
+</html>

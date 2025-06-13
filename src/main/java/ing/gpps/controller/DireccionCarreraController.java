@@ -6,6 +6,7 @@ import ing.gpps.entity.institucional.Entidad;
 import ing.gpps.entity.institucional.Proyecto;
 import ing.gpps.entity.users.Admin;
 import ing.gpps.entity.users.DireccionDeCarrera;
+import ing.gpps.entity.users.DocenteSupervisor;
 import ing.gpps.entity.users.Usuario;
 import ing.gpps.repository.SolicitudRepository;
 import ing.gpps.security.CustomUserDetails;
@@ -47,6 +48,8 @@ public class DireccionCarreraController {
     private SolicitudService solicitudService;
     @Autowired
     private ConvenioService convenioService;
+    @Autowired
+    private DireccionDeCarreraService direccionDeCarreraService;
 
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
@@ -253,4 +256,26 @@ public class DireccionCarreraController {
         }
         return ResponseEntity.badRequest().build();
     }
+
+    @PostMapping("/asignarDocenteSupervisor/{cuit}/{titulo}")
+    public ResponseEntity<?> asignarDocenteSupervisor(
+            @PathVariable Long cuit,
+            @PathVariable String titulo,
+            @RequestParam String emailDocente) {
+
+        try {
+            direccionDeCarreraService.asignarDocenteSupervisor(cuit, titulo, emailDocente);
+            return ResponseEntity.ok(Map.of("success", true, "message", "Docente supervisor asignado correctamente"));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("success", false, "message", e.getMessage()));
+        }
+    }
+
+    @GetMapping("/docentesSupervisores")
+    @ResponseBody
+    public ResponseEntity<List<DocenteSupervisor>> getDocentesSupervisores() {
+        List<DocenteSupervisor> docentes = direccionDeCarreraService.getAllDocentesSupervisores();
+        return ResponseEntity.ok(docentes);
+    }
+
 } 

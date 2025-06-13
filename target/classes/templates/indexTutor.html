@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Docente Supervisor - GPPS UNRN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* (Estilos idénticos a los del código para la entidad ) */
+            body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          background-color: #f5f5f5;
+        }
+
+        header, footer {
+          background-color: #002642;
+          color: white;
+        }
+
+        .header-container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 10px 20px;
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+
+        .logo-container {
+          padding: 5px 0;
+        }
+
+        .user-info {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+        }
+
+       .user-name {
+   color: white;
+   font-weight: bold;
+   font-family: Arial, sans-serif; /* Asegura la tipografía */
+}
+
+        .sub-header {
+          background-color: #001a33;
+          padding: 10px 20px;
+          border-bottom: 1px solid #004672;
+          color: white;
+        }
+
+        .propuesta {
+          max-width: 1200px;
+          margin: 0 auto;
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .propuesta select {
+          padding: 5px 10px;
+          border: 1px solid #004672;
+          border-radius: 4px;
+          background-color: #002642;
+          color: white;
+        }
+
+        nav {
+          background-color: #003a63;
+          border-bottom: 1px solid #004672;
+          display: flex;
+          justify-content: space-between;
+          padding: 0 20px;
+        }
+
+        .nav-container {
+          max-width: 1200px;
+          margin: 0 auto;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .main-menu {
+          list-style: none;
+          display: flex;
+          gap: 30px;
+          padding: 0;
+          margin: 0;
+        }
+
+        .main-menu li a {
+          display: block;
+          padding: 15px 25px;
+          color: white;
+          text-decoration: none;
+          transition: background-color 0.3s;
+          font-size: 16px;
+          font-weight: 500;
+          text-align: center;
+        }
+
+        .main-menu li a:hover {
+          background-color: #003152;
+        }
+
+        .profile-menu {
+          padding: 15px 20px;
+          color: white;
+          display: flex;
+          align-items: center;
+          gap: 15px;
+          .profile-menu {
+    margin-left: auto;
+}
+        }
+
+        .icon-separator {
+          width: 1px;
+          height: 20px;
+          background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        main {
+          max-width: 1200px;
+          margin: 20px auto;
+          padding: 0 20px;
+        }
+
+        section {
+          background: #ffffff;
+          border-radius: 8px;
+          padding: 25px;
+          margin-bottom: 30px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+          color: #002642;
+          margin-bottom: 20px;
+          padding-bottom: 10px;
+          border-bottom: 2px solid #002642;
+          font-size: 1.5em;
+        }
+
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-top: 15px;
+        }
+
+        th, td {
+          padding: 12px 15px;
+          text-align: left;
+          border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+          background-color: #f8f9fa;
+          color: #002642;
+          font-weight: 600;
+        }
+
+        tr:hover {
+          background-color: #f8f9fa;
+        }
+
+        .btn {
+          background-color: #002642;
+          color: white;
+          padding: 8px 16px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+          background-color: #004d8c;
+        }
+
+        .btn.small {
+          padding: 6px 12px;
+          font-size: 0.9em;
+        }
+
+        .entrega-status {
+          padding: 6px 12px;
+          border-radius: 20px;
+          font-size: 0.9em;
+          font-weight: 600;
+          display: inline-block;
+        }
+
+        .status-submitted { background-color: #e3f2fd; color: #1976d2; }
+        .status-approved { background-color: #e8f5e9; color: #2e7d32; }
+        .status-rejected { background-color: #ffebee; color: #c62828; }
+        .status-pending  { background-color: #fff3e0; color: #ef6c00; }
+
+        footer {
+          text-align: center;
+          padding: 20px;
+          margin-top: 50px;
+        }
+        aa
+        .notification-container {
+            position: relative;
+        }
+
+        .notification-icon {
+            cursor: pointer;
+            position: relative;
+            padding: 5px;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: red;
+            color: white;
+            font-size: 0.7em;
+            padding: 2px 6px;
+            border-radius: 50%;
+        }
+
+        .notification-dropdown {
+            position: absolute;
+            right: 0;
+            top: 35px;
+            background: white;
+            color: black;
+            width: 300px;
+            max-height: 400px;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .notificacion-lista {
+            padding: 10px;
+        }
+
+        .notificacion-item {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            font-size: 0.9em;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .notificacion-item.unread {
+            font-weight: bold;
+            background-color: #f0f8ff;
+        }
+
+        .notificacion-item i {
+            margin-top: 2px;
+        }
+
+        .notificacion-footer {
+            padding: 10px;
+            text-align: center;
+            background-color: #f8f9fa;
+        }
+
+    </style>
+</head>
+<body>
+<header>
+    <div class="header-container">
+        <div class="logo-container">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-So2CHeud6JF1xVNp1LlSIuwt3sgVUg.png" width=70 alt="Logo UNRN">
+            <img src="https://lh3.googleusercontent.com/a-/ALV-UjVX7tQfNfC44NY6OR_Fwc7MJze4ucpzRbw1lXa0yPCWLi6cuJkC=s129-p-k-rw-no" width=100 alt="Logo LIA">
+        </div>
+        <div class="user-info">
+            <div class="user-dropdown">
+                <span class="user-name" th:text="${tutor.nombre + ' ' + tutor.apellido + ' 👨‍🏫'}">Mauro Cambarieri 👨‍🏫</span>
+            </div>
+        </div>
+    </div>
+    <div class="sub-header">
+        <div class="propuesta">
+            <span>Propuesta:</span>
+            <form id="logoutForm" th:action="@{/logout}" method="post" style="display:none;"></form>
+            <select id="admin-select" onchange="if(this.value==='logout'){document.getElementById('logoutForm').submit();}">
+                <option value="admin">Docente Supervisor</option>
+                <option value="logout">Cerrar sesión</option>
+            </select>
+        </div>
+    </div>
+</header>
+
+<nav>
+    <div class="nav-container">
+        <ul class="main-menu">
+            <li><a href="#convenio">Convenios</a></li>
+            <li><a href="#proyectos">Proyectos</a></li>
+            <li><a href="#estudiantes">Estudiantes</a></li>
+            <li><a href="#entregas">Entregas</a></li>
+        </ul>
+        <div class="profile-menu">
+            <div class="notification-container">
+    <span class="notification-icon">
+        <i class="fas fa-bell"></i>
+        <span class="notification-badge" id="notificacion-count" style="display:none;">0</span>
+    </span>
+                <div class="notification-dropdown" id="notification-dropdown" style="display: none;">
+                    <div id="notificacion-lista" class="notificacion-lista">
+                        <p style="text-align:center; padding: 10px;">Cargando notificaciones...</p>
+                    </div>
+                    <div class="notificacion-footer">
+                        <button class="btn secondary" onclick="marcarTodasLeidas()">Marcar todas como leídas</button>
+                    </div>
+                </div>
+            </div>
+
+            <span class="icon-separator"></span>
+            <span><i class="fas fa-envelope"></i></span>
+            <span class="icon-separator"></span>
+        </div>
+    </div>
+</nav>
+
+<main>
+    <section id="convenio">
+        <h2>Convenios Asignados</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Entidad</th>
+                <th>Tutor Externo</th>
+                <th>Fecha de Inicio</th>
+                <th>Duración</th>
+                <th>Descripción</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Empresa XYZ</td>
+                <td>Ing. Laura Acuña</td>
+                <td>01/03/2025</td>
+                <td>1 año</td>
+                <td>Colaboración con prácticas profesionales supervisadas.</td>
+            </tr>
+            <tr>
+                <td>Clínica Patagonia</td>
+                <td>Dr. Jorge Soria</td>
+                <td>10/04/2025</td>
+                <td>1 año</td>
+                <td>Colaboración con prácticas profesionales supervisadas.</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="proyectos">
+        <h2>Proyectos Activos</h2>
+        <button class="btn small" style="margin-bottom: 10px;"><i class="fas fa-plus"></i> Agregar Proyecto</button>
+        <table>
+            <thead>
+            <tr>
+                <th>Título</th>
+                <th>Estudiante</th>
+                <th>Tutor UNRN</th>
+                <th>Inicio</th>
+                <th>Progreso</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>App Ventas</td>
+                <td>Juan Pérez</td>
+                <td>Dra. María González</td>
+                <td>15/03/2025</td>
+                <td>75%</td>
+                <td><button class="btn small"><i class="fas fa-eye"></i> Ver</button></td>
+            </tr>
+            <tr>
+                <td>Gestión Turnos</td>
+                <td>María González</td>
+                <td>Lic. Paula Díaz</td>
+                <td>20/03/2025</td>
+                <td>60%</td>
+                <td><button class="btn small"><i class="fas fa-eye"></i> Ver</button></td>
+            </tr>
+            <tr>
+                <td>App Móvil</td>
+                <td>Carlos Rodríguez</td>
+                <td>Mg. Roberto Gómez</td>
+                <td>01/04/2025</td>
+                <td>40%</td>
+                <td><button class="btn small"><i class="fas fa-eye"></i> Ver</button></td>
+            </tr>
+            <tr>
+                <td>Inventario Web</td>
+                <td>Laura Fernández</td>
+                <td>Ing. Laura Martínez</td>
+                <td>10/04/2025</td>
+                <td>50%</td>
+                <td><button class="btn small"><i class="fas fa-eye"></i> Ver</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="estudiantes">
+        <h2>Estudiantes Asignados</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Proyecto</th>
+                <th>Inicio</th>
+                <th>Estado</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Juan Pérez</td>
+                <td>App Ventas</td>
+                <td>15/03/2025</td>
+                <td>Activo</td>
+            </tr>
+            <tr>
+                <td>María González</td>
+                <td>Gestión Turnos</td>
+                <td>20/03/2025</td>
+                <td>Activo</td>
+            </tr>
+            <tr>
+                <td>Carlos Rodríguez</td>
+                <td>App Móvil</td>
+                <td>01/04/2025</td>
+                <td>Activo</td>
+            </tr>
+            <tr>
+                <td>Laura Fernández</td>
+                <td>Inventario Web</td>
+                <td>10/04/2025</td>
+                <td>Activo</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="entregas">
+        <h2>Entregas</h2>
+        <button class="btn small" style="margin-bottom: 10px;"><i class="fas fa-plus"></i> Agregar Entrega</button>
+        <div class="dashboard-card">
+            <table>
+                <thead>
+                <tr>
+                    <th>Estudiante</th>
+                    <th>Proyecto</th>
+                    <th>Entrega</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Juan Pérez</td>
+                    <td>App Ventas</td>
+                    <td>Entrega 1: Análisis</td>
+                    <td>22/04/2025</td>
+                    <td><span class="submission-status status-approved">Aprobado</span></td>
+                    <td><button class="btn small"><i class="fas fa-eye"></i> Ver</button></td>
+                </tr>
+                <tr>
+                    <td>María González</td>
+                    <td>Gestión Turnos</td>
+                    <td>Entrega 2: Diseño</td>
+                    <td>28/04/2025</td>
+                    <td><span class="submission-status status-pending">Pendiente</span></td>
+                    <td><button class="btn small"><i class="fas fa-eye"></i> Ver</button></td>
+                </tr>
+                <tr>
+                    <td>Carlos Rodríguez</td>
+                    <td>App Móvil</td>
+                    <td>Entrega 1: Requisitos</td>
+                    <td>25/04/2025</td>
+                    <td><span class="submission-status status-rejected">Rechazado</span></td>
+                    <td><button class="btn small"><i class="fas fa-eye"></i> Ver</button></td>
+                </tr>
+                <tr>
+                    <td>Laura Fernández</td>
+                    <td>Inventario Web</td>
+                    <td>Entrega 3: Implementación</td>
+                    <td>02/05/2025</td>
+                    <td><span class="submission-status status-pending">Pendiente</span></td>
+                    <td><button class="btn small"><i class="fas fa-eye"></i> Ver</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const iconoCampana = document.querySelector(".notification-icon");
+        const dropdown = document.getElementById("notification-dropdown");
+        const badge = document.getElementById("notificacion-count");
+
+        // Toggle dropdown
+        iconoCampana.addEventListener("click", function () {
+            dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
+        });
+
+        // Cerrar el dropdown si se clickea fuera
+        window.addEventListener("click", function (e) {
+            if (!iconoCampana.contains(e.target)) {
+                dropdown.style.display = "none";
+            }
+        });
+
+        // Cargar notificaciones
+        fetch('/api/notificaciones/usuario')
+            .then(res => res.json())
+            .then(data => {
+                const lista = document.getElementById("notificacion-lista");
+                lista.innerHTML = '';
+
+                if (data.notificaciones.length === 0) {
+                    lista.innerHTML = "<p style='text-align:center;'>Sin notificaciones</p>";
+                } else {
+                    data.notificaciones.forEach(n => {
+                        const item = document.createElement("div");
+                        item.className = "notificacion-item" + (n.leida ? "" : " unread");
+                        item.innerHTML = `
+                            <i class="${n.iconoTipo}" style="color: ${n.colorTipo};"></i>
+                            <div>
+                                <div>${n.mensaje}</div>
+                                <small>${n.fechaCreacionFormateada}</small>
+                            </div>
+                        `;
+                        lista.appendChild(item);
+                    });
+                }
+
+                if (data.noLeidas > 0) {
+                    badge.innerText = data.noLeidas;
+                    badge.style.display = "inline-block";
+                }
+            })
+            .catch(err => console.error("Error al cargar notificaciones:", err));
+    });
+
+    function marcarTodasLeidas() {
+        fetch('/api/notificaciones/marcar-todas-leidas', {
+            method: 'POST'
+        }).then(() => location.reload());
+    }
+</script>
+
+
+<footer>
+    <div class="footer-content">
+        <p>&copy; 2025 Universidad Nacional de Río Negro - GPPS</p>
+    </div>
+</footer>
+</body>
+</html>

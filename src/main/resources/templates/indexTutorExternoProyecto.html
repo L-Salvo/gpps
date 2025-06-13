@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Proyecto - GPPS UNRN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        header, footer {
+            background-color: #002642;
+            color: white;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo-container {
+            padding: 5px 0;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-name {
+            color: white;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+
+        .sub-header {
+            background-color: #001a33;
+            padding: 10px 20px;
+            border-bottom: 1px solid #004672;
+            color: white;
+        }
+
+        .propuesta {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .propuesta select {
+            padding: 5px 10px;
+            border: 1px solid #004672;
+            border-radius: 4px;
+            background-color: #002642;
+            color: white;
+        }
+
+        nav {
+            background-color: #003a63;
+            border-bottom: 1px solid #004672;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .main-menu {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+            padding: 0;
+            margin: 0;
+        }
+
+        .main-menu li a {
+            display: block;
+            padding: 15px 25px;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            font-size: 16px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .main-menu li a:hover {
+            background-color: #003152;
+        }
+
+        .profile-menu {
+            padding: 15px 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icon-separator {
+            width: 1px;
+            height: 20px;
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .info-section {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-section h3 {
+            color: #002642;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #002642;
+            font-size: 1.5em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            color: #002642;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-submitted { background-color: #e3f2fd; color: #1976d2; }
+        .status-approved { background-color: #e8f5e9; color: #2e7d32; }
+        .status-rejected { background-color: #ffebee; color: #c62828; }
+        .status-pending { background-color: #fff3e0; color: #ef6c00; }
+
+        .action-button {
+            padding: 10px 20px;
+            background-color: #002642;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            opacity: 1;
+        }
+
+        .action-button:hover {
+            background-color: #004d8c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            opacity: 1;
+        }
+
+        .action-button i {
+            font-size: 1.1em;
+        }
+
+        .cambiar-estado-btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            background-color: #1976d2;
+            color: white;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            opacity: 1;
+        }
+
+        .cambiar-estado-btn:hover {
+            background-color: #1565c0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            opacity: 1;
+        }
+
+        .cambiar-estado-btn i {
+            font-size: 1em;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #002642;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #004d8c;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #666;
+            padding: 1rem;
+            font-style: italic;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        /* Estilos simplificados */
+        .modal-content {
+            max-width: 400px;
+            margin: 1rem auto;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            background-color: #ffffff;
+        }
+
+        .modal-header {
+            padding: 0.75rem;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .modal-header h3 {
+            font-size: 1rem;
+            margin: 0;
+            color: #333;
+        }
+
+        form {
+            padding: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.25rem;
+        }
+
+        .form-control {
+            padding: 0.5rem;
+            font-size: 0.9rem;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+
+        .form-control:focus {
+            border-color: #80bdff;
+            outline: none;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .file-upload-container {
+            border: 1px solid #ddd;
+            padding: 0.5rem;
+            border-radius: 3px;
+        }
+
+        .form-text {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 0.25rem;
+        }
+
+        .modal-footer {
+            padding: 0.75rem;
+            border-top: 1px solid #dee2e6;
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 0.4rem 0.75rem;
+            font-size: 0.9rem;
+            border-radius: 3px;
+            background: #fff;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: #007bff !important;
+            color: #fff !important;
+            border: none !important;
+            opacity: 1 !important;
+        }
+
+        .btn-primary:hover {
+            background: #0056b3 !important;
+        }
+
+        .btn-secondary {
+            background: #6c757d !important;
+            color: #fff !important;
+            border: none !important;
+            opacity: 1 !important;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268 !important;
+        }
+
+        .close-button {
+            font-size: 1.1rem;
+            color: #666;
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        textarea.form-control {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        /* Estilos del modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="header-container">
+        <div class="logo-container">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-So2CHeud6JF1xVNp1LlSIuwt3sgVUg.png" width=70 alt="Logo UNRN">
+            <img src="https://lh3.googleusercontent.com/a-/ALV-UjVX7tQfNfC44NY6OR_Fwc7MJze4ucpzRbw1lXa0yPCWLi6cuJkC=s129-p-k-rw-no" width=100 alt="Logo LIA">
+        </div>
+        <div class="user-info">
+            <div class="user-dropdown">
+                <span class="user-name" th:text="${tutor.nombre + ' ' + tutor.apellido + ' 👨‍🏫'}">Nombre tutor 👨‍🏫</span>
+            </div>
+        </div>
+    </div>
+    <div class="sub-header">
+        <div class="propuesta">
+            <span>Propuesta:</span>
+            <form id="logoutForm" th:action="@{/logout}" method="post" style="display:none;"></form>
+            <select id="admin-select" onchange="if(this.value==='logout'){document.getElementById('logoutForm').submit();}" aria-label="Opciones de usuario">
+                <option value="admin">Tutor Externo</option>
+                <option value="logout">Cerrar sesión</option>
+            </select>
+        </div>
+    </div>
+</header>
+
+<nav>
+    <ul class="main-menu">
+    </ul>
+    <div class="profile-menu">
+        <span><i class="fas fa-bell"></i></span>
+        <span class="icon-separator"></span>
+        <span><i class="fas fa-envelope"></i></span>
+        <span class="icon-separator"></span>
+    </div>
+</nav>
+
+<div class="main-content">
+    <a th:href="@{/tutor-externo/dashboard}" class="back-button">
+        <i class="fas fa-arrow-left"></i> Volver
+    </a>
+
+    <div class="info-section">
+        <h3>Detalles del Proyecto</h3>
+        <div th:if="${proyecto != null}">
+            <p><strong>Título:</strong> <span th:text="${proyecto.titulo}"></span></p>
+            <p><strong>Descripción:</strong> <span th:text="${proyecto.descripcion}"></span></p>
+            <p><strong>Estudiante:</strong>
+                <span th:text="${proyecto.estudiante != null ? proyecto.estudiante.nombre + ' ' + proyecto.estudiante.apellido : 'Sin asignar'}"></span>
+            </p>
+            <p><strong>Entidad:</strong> <span th:text="${proyecto.entidad.nombre}"></span></p>
+            <p><strong>Progreso:</strong> <span th:text="${progreso + '%'}"></span></p>
+        </div>
+    </div>
+
+    <div class="info-section">
+        <div class="section-header">
+            <h3>Actividades del Proyecto</h3>
+            <button class="action-button" onclick="openCreateActivityModal()">
+                <i class="fas fa-plus"></i> Crear Actividad
+            </button>
+        </div>
+        <table>
+            <thead>
+            <tr>
+                <th>Número</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Horas</th>
+                <th>Fecha Límite</th>
+                <th>Estado</th>
+                <th>Comentarios</th>
+                <th>Acciones</th>
+                <th>Archivo</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="actividad : ${actividades}">
+                <td th:text="${actividad.actividadId.numero}">1</td>
+                <td th:text="${actividad.nombre}">Nombre Actividad</td>
+                <td th:text="${actividad.descripcion}">Descripción</td>
+                <td th:text="${actividad.horas}">Horas</td>
+                <td th:text="${actividad.fechaLimite != null ? #temporals.format(actividad.fechaLimite, 'dd/MM/yyyy') : '-'}">Fecha Límite</td>
+                <td>
+                            <span class="status-badge" th:classappend="${actividad.estado == 'COMPLETADA' ? 'status-approved' :
+                                                                      actividad.estado == 'RECHAZADA' ? 'status-rejected' :
+                                                                      actividad.estado == 'EN_CURSO' ? 'status-submitted' : 'status-pending'}"
+                                  th:text="${actividad.estado}">Estado</span>
+                </td>
+                <td>
+                            <span th:if="${actividad.comentarios != null && !actividad.comentarios.isEmpty()}"
+                                  class="comment-badge"
+                                  th:text="${actividad.comentarios}">Comentarios</span>
+                    <span th:unless="${actividad.comentarios != null && !actividad.comentarios.isEmpty()}"
+                          class="no-comment">Sin comentarios</span>
+                </td>
+                <td>
+                    <button class="cambiar-estado-btn"
+                            th:data-actividad-id="${actividad.actividadId.numero}"
+                            th:data-plan-numero="${actividad.actividadId.planDeTrabajoId.numero}"
+                            th:data-proyecto-cuit="${actividad.actividadId.planDeTrabajoId.proyectoId.cuitEntidad}"
+                            th:data-proyecto-titulo="${actividad.actividadId.planDeTrabajoId.proyectoId.titulo}">
+                        <i class="fas fa-edit"></i> Cambiar Estado
+                    </button>
+                </td>
+                <td>
+                    <a th:if="${actividad.rutaArchivo != null}"
+                       th:href="@{/tutor-externo/descargarActividad/{numero}/{planNumero}/{proyectoTitulo}/{proyectoCuit}(
+                                   numero=${actividad.actividadId.numero},
+                                   planNumero=${actividad.actividadId.planDeTrabajoId.numero},
+                                   proyectoTitulo=${actividad.actividadId.planDeTrabajoId.proyectoId.titulo},
+                                   proyectoCuit=${actividad.actividadId.planDeTrabajoId.proyectoId.cuitEntidad}
+                               )}"
+                       class="btn small">
+                        <i class="fas fa-download"></i> Descargar
+                    </a>
+                    <span th:unless="${actividad.rutaArchivo != null}" class="no-file">Sin archivo</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="info-section">
+        <h3>Entregas</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Fecha Límite</th>
+                <th>Fecha Entrega</th>
+                <th>Estado</th>
+                <th>Comentarios</th>
+                <th>Acciones</th>
+                <th>Archivo</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="entrega : ${entregas}">
+                <td th:text="${entrega.titulo}">Título Entrega</td>
+                <td th:text="${entrega.descripcion}">Descripción</td>
+                <td th:text="${#temporals.format(entrega.fechaLimite, 'dd/MM/yyyy')}">Fecha Límite</td>
+                <td th:text="${entrega.fechaEntrega != null ? #temporals.format(entrega.fechaEntrega, 'dd/MM/yyyy') : '-'}">Fecha Entrega</td>
+                <td>
+                            <span class="status-badge" th:classappend="${entrega.estado == 'APROBADO' ? 'status-approved' :
+                                                                      entrega.estado == 'RECHAZADO' ? 'status-rejected' :
+                                                                      entrega.estado == 'ENTREGADO' ? 'status-submitted' : 'status-pending'}"
+                                  th:text="${entrega.estado}">Estado</span>
+                </td>
+                <td>
+                            <span th:if="${entrega.comentarios != null && !entrega.comentarios.isEmpty()}"
+                                  class="comment-badge"
+                                  th:text="${entrega.comentarios}">Comentarios</span>
+                    <span th:unless="${entrega.comentarios != null && !entrega.comentarios.isEmpty()}"
+                          class="no-comment">Sin comentarios</span>
+                </td>
+                <td>
+                    <button class="cambiar-estado-btn"
+                            th:onclick="cambiarEstadoEntrega([[${entrega.id}]], '[[${proyecto.proyectoId.cuitEntidad}]]', '[[${proyecto.proyectoId.titulo}]]')">
+                        <i class="fas fa-edit"></i> Cambiar Estado
+                    </button>
+                </td>
+                <td>
+                    <a th:if="${entrega.rutaArchivo != null}"
+                       th:href="@{/tutor-externo/descargarEntrega/{id}(id=${entrega.id})}"
+                       class="btn small">
+                        <i class="fas fa-download"></i> Descargar
+                    </a>
+                    <span th:unless="${entrega.rutaArchivo != null}" class="no-file">Sin archivo</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="info-section">
+        <h3>Informes</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Número</th>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Fecha</th>
+                <th>Archivo</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="informe : ${informes}">
+                <td th:text="${informe.id.numero}">1</td>
+                <td th:text="${informe.titulo}">Título del Informe</td>
+                <td th:text="${informe.descripcion}">Descripción del Informe</td>
+                <td th:text="${#temporals.format(informe.fecha, 'dd/MM/yyyy')}">Fecha</td>
+                <td>
+                    <a th:if="${informe.rutaArchivo != null}"
+                       th:href="@{/tutor-externo/descargarInforme/{numero}/{estudianteDni}/{actividadNumero}/{planNumero}/{proyectoTitulo}/{proyectoCuit}(numero=${informe.id.numero}, estudianteDni=${informe.id.estudianteDni}, actividadNumero=${informe.actividad.actividadId.numero}, planNumero=${informe.actividad.actividadId.planDeTrabajoId.numero}, proyectoTitulo=${informe.actividad.actividadId.planDeTrabajoId.proyectoId.titulo}, proyectoCuit=${informe.actividad.actividadId.planDeTrabajoId.proyectoId.cuitEntidad})}"
+                       class="btn small">
+                        <i class="fas fa-download"></i> Descargar
+                    </a>
+                    <span th:unless="${informe.rutaArchivo != null}" class="no-file">Sin archivo</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal para cambiar estado de actividad -->
+<div id="modalActividad" class="modal">
+    <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+            <h3 class="mb-0">Cambiar Estado de Actividad</h3>
+            <button class="close-button text-white" onclick="cerrarModal('modalActividad')">&times;</button>
+        </div>
+        <form id="formActividad" th:action="@{/tutor-externo/cambiar-estado-actividad}" method="post" class="p-4">
+            <input type="hidden" id="actividadId" name="actividadId">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <input type="hidden" id="planNumeroActividad" name="planNumero">
+            <input type="hidden" id="proyectoCuitActividad" name="proyectoCuit">
+            <input type="hidden" id="proyectoTituloActividad" name="proyectoTitulo">
+            <div class="form-group mb-3">
+                <label for="estadoActividad" class="form-label fw-bold">Estado</label>
+                <select id="estadoActividad" name="estado" class="form-select">
+                    <option value="EN_REVISION">En Revisión</option>
+                    <option value="EN_CURSO">En Curso</option>
+                    <option value="COMPLETADA">Completada</option>
+                    <option value="RECHAZADA">Rechazada</option>
+                </select>
+            </div>
+            <div class="form-group mb-4">
+                <label for="comentarioActividad" class="form-label fw-bold">Comentarios</label>
+                <textarea id="comentarioActividad" name="comentario" class="form-control" rows="4" placeholder="Ingrese sus comentarios aquí..."></textarea>
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-secondary" onclick="cerrarModal('modalActividad')">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal para cambiar estado de entrega -->
+<div id="modalEntrega" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Cambiar Estado de Entrega</h3>
+            <button class="close-button" onclick="cerrarModal('modalEntrega')">&times;</button>
+        </div>
+        <form id="formEntrega" th:action="@{/tutor-externo/cambiar-estado-entrega}" method="post">
+            <input type="hidden" id="entregaId" name="entregaId">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <input type="hidden" id="proyectoCuitEntrega" name="proyectoCuit">
+            <input type="hidden" id="proyectoTituloEntrega" name="proyectoTitulo">
+            <div class="form-group">
+                <label for="estadoEntrega">Estado</label>
+                <select id="estadoEntrega" name="estado" class="status-select">
+                    <option value="PENDIENTE">Pendiente</option>
+                    <option value="ENTREGADO">Entregado</option>
+                    <option value="APROBADO">Aprobado</option>
+                    <option value="RECHAZADO">Rechazado</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="comentarioEntrega">Comentarios</label>
+                <textarea id="comentarioEntrega" name="comentario" class="comment-textarea" placeholder="Ingrese sus comentarios aquí..."></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="cerrarModal('modalEntrega')">Cancelar</button>
+                <button type="submit" class="btn-primary">Guardar Cambios</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal para crear actividad -->
+<div id="createActivityModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Crear Nueva Actividad</h2>
+            <button class="modal-close" onclick="closeCreateActivityModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form th:action="@{/tutor-externo/proyecto/{cuit}/{titulo}/actividad/crear(cuit=${proyecto.proyectoId.cuitEntidad},titulo=${proyecto.proyectoId.titulo})}"
+                  method="POST"
+                  enctype="multipart/form-data">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcion">Descripción:</label>
+                    <textarea id="descripcion" name="descripcion" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="horas">Horas Estimadas:</label>
+                    <input type="number" id="horas" name="horas" min="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="fechaLimite">Fecha de Entrega:</label>
+                    <input type="date" id="fechaLimite" name="fechaLimite" required
+                           th:min="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}"
+                           th:value="${#temporals.format(#temporals.createNow().plusDays(7), 'yyyy-MM-dd')}">
+                </div>
+
+                <div class="form-group">
+                    <label for="archivo">Subir Archivo:</label>
+                    <input type="file" id="archivo" name="archivo" accept=".pdf,.doc,.docx,.txt">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn secondary" onclick="closeCreateActivityModal()">Cancelar</button>
+                    <button type="submit" class="btn primary">Crear Actividad</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Agregar event listeners a los botones de cambiar estado
+        document.querySelectorAll('.cambiar-estado-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const actividadId = this.getAttribute('data-actividad-id');
+                const planNumero = this.getAttribute('data-plan-numero');
+                const proyectoCuit = this.getAttribute('data-proyecto-cuit');
+                const proyectoTitulo = this.getAttribute('data-proyecto-titulo');
+
+                cambiarEstadoActividad(actividadId, planNumero, proyectoCuit, proyectoTitulo);
+            });
+        });
+
+        // Agregar event listener para cerrar el modal al hacer clic fuera
+        window.onclick = function(event) {
+            if (event.target.className === 'modal') {
+                event.target.style.display = 'none';
+            }
+        }
+
+        // Interceptar submit de Crear Actividad
+        const formCrearActividad = document.querySelector('#createActivityModal form');
+        if (formCrearActividad) {
+            formCrearActividad.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(formCrearActividad);
+                fetch(formCrearActividad.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                })
+                .then(response => {
+                    if (response.redirected) {
+                        window.location.href = response.url;
+                    } else if (response.ok) {
+                        closeCreateActivityModal();
+                        location.reload();
+                    } else {
+                        alert('Error al crear la actividad');
+                    }
+                })
+                .catch(() => alert('Error de red al crear actividad'));
+            });
+        }
+
+        // Interceptar submit de Cambiar Estado de Entrega
+        const formEntrega = document.getElementById('formEntrega');
+        if (formEntrega) {
+            formEntrega.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(formEntrega);
+                fetch(formEntrega.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                })
+                .then(response => {
+                    if (response.redirected) {
+                        window.location.href = response.url;
+                    } else if (response.ok) {
+                        cerrarModal('modalEntrega');
+                        location.reload();
+                    } else {
+                        alert('Error al cambiar el estado de la entrega');
+                    }
+                })
+                .catch(() => alert('Error de red al cambiar estado de entrega'));
+            });
+        }
+
+        // Interceptar submit de Cambiar Estado de Actividad
+        const formActividad = document.getElementById('formActividad');
+        if (formActividad) {
+            formActividad.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(formActividad);
+                fetch(formActividad.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                })
+                .then(response => {
+                    if (response.redirected) {
+                        window.location.href = response.url;
+                    } else if (response.ok) {
+                        cerrarModal('modalActividad');
+                        location.reload();
+                    } else {
+                        alert('Error al cambiar el estado de la actividad');
+                    }
+                })
+                .catch(() => alert('Error de red al cambiar estado de actividad'));
+            });
+        }
+    });
+
+    function cambiarEstadoActividad(actividadId, planNumero, proyectoCuit, proyectoTitulo) {
+        console.log('Parámetros recibidos:', {actividadId, planNumero, proyectoCuit, proyectoTitulo});
+
+        if (!actividadId || !planNumero || !proyectoCuit || !proyectoTitulo) {
+            console.error('Faltan parámetros requeridos');
+            return;
+        }
+
+        // Asegurarse de que proyectoCuit sea un número
+        proyectoCuit = parseInt(proyectoCuit);
+        if (isNaN(proyectoCuit)) {
+            console.error('El CUIT debe ser un número válido');
+            return;
+        }
+
+        // Establecer los valores en el formulario
+        document.getElementById('actividadId').value = actividadId;
+        document.getElementById('planNumeroActividad').value = planNumero;
+        document.getElementById('proyectoCuitActividad').value = proyectoCuit;
+        document.getElementById('proyectoTituloActividad').value = proyectoTitulo;
+
+        // Limpiar el formulario antes de mostrar el modal
+        document.getElementById('estadoActividad').value = 'EN_REVISION';
+        document.getElementById('comentarioActividad').value = '';
+
+        // Mostrar el modal
+        document.getElementById('modalActividad').style.display = 'block';
+    }
+
+    function cambiarEstadoEntrega(entregaId, proyectoCuit, proyectoTitulo) {
+        document.getElementById('entregaId').value = entregaId;
+        document.getElementById('proyectoCuitEntrega').value = proyectoCuit;
+        document.getElementById('proyectoTituloEntrega').value = proyectoTitulo;
+        document.getElementById('modalEntrega').style.display = 'block';
+    }
+
+    function cerrarModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.style.display = 'none';
+            // Limpiar el formulario si es el modal de actividad
+            if (modalId === 'modalActividad') {
+                document.getElementById('formActividad').reset();
+            }
+        }
+    }
+
+    // Función para abrir el modal de crear actividad
+    function openCreateActivityModal() {
+        document.getElementById('createActivityModal').style.display = 'block';
+    }
+
+    // Función para cerrar el modal de crear actividad
+    function closeCreateActivityModal() {
+        document.getElementById('createActivityModal').style.display = 'none';
+    }
+
+    // Cerrar el modal al hacer clic fuera de él
+    window.onclick = function(event) {
+        const modal = document.getElementById('createActivityModal');
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    }
+
+    // Asegurarse de que el modal esté cerrado al cargar la página
+    document.addEventListener('DOMContentLoaded', function() {
+        const modal = document.getElementById('createActivityModal');
+        if (modal) {
+            modal.style.display = 'none';
+        }
+    });
+</script>
+</body>
+</html>

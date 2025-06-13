@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPPS - Postulantes del Proyecto</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Estilos generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Encabezado */
+        header {
+            background-color: #002642;
+            color: white;
+            padding: 1rem;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Contenido principal */
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .proyecto-info {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .proyecto-info h1 {
+            color: #002642;
+            margin-bottom: 1rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .info-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #002642;
+        }
+
+        /* Tabla de postulantes */
+        .table-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #002642;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        /* Botones de acción */
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+
+        .btn-aceptar {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-rechazar {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-volver {
+            background-color: #6c757d;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Estado de la solicitud */
+        .estado-pendiente {
+            color: #ffc107;
+            font-weight: 500;
+        }
+
+        .estado-aprobada {
+            color: #28a745;
+            font-weight: 500;
+        }
+
+        .estado-rechazada {
+            color: #dc3545;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo-container">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-So2CHeud6JF1xVNp1LlSIuwt3sgVUg.png" width=70 alt="Logo UNRN" class="logoUNRN">
+                <img src="https://lh3.googleusercontent.com/a-/ALV-UjVX7tQfNfC44NY6OR_Fwc7MJze4ucpzRbw1lXa0yPCWLi6cuJkC=s129-p-k-rw-no" width=100 alt="Logo LIA" class="logoLIA">
+            </div>
+            <div class="user-info">
+                <span class="user-name" th:text="${direccion.nombre + ' ' + direccion.apellido + ' 🧑‍💻'}">Direccion de carrera 🧑‍💻</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <a th:href="@{/direccion/dashboard}" class="btn btn-volver">
+            <i class="fas fa-arrow-left"></i> Volver al Dashboard
+        </a>
+
+        <div class="proyecto-info">
+            <h1 th:text="${proyecto.titulo}">Título del Proyecto</h1>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Entidad:</span>
+                    <span th:text="${proyecto.entidad.nombre}">Nombre de la Entidad</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Docente Supervisor:</span>
+                    <span th:text="${proyecto.tutorUNRN != null ? proyecto.tutorUNRN.nombre + ' ' + proyecto.tutorUNRN.apellido : 'No asignado'}">Nombre Apellido</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Fecha Inicio:</span>
+                    <span th:text="${proyecto.planDeTrabajo != null ? #temporals.format(proyecto.planDeTrabajo.fechaInicio, 'dd/MM/yyyy') : 'No asignada'}">01/01/2024</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Fecha Fin:</span>
+                    <span th:text="${proyecto.planDeTrabajo != null ? #temporals.format(proyecto.planDeTrabajo.fechaFin, 'dd/MM/yyyy') : 'No asignada'}">31/12/2024</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <h2>Postulantes</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Estudiante</th>
+                        <th>Legajo</th>
+                        <th>Email</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${solicitudes.empty}">
+                        <td colspan="5" style="text-align: center; padding: 20px;">
+                            No hay postulantes para este proyecto
+                        </td>
+                    </tr>
+                    <tr th:each="solicitud : ${solicitudes}">
+                        <td th:text="${solicitud.solicitante.nombre + ' ' + solicitud.solicitante.apellido}">Nombre Apellido</td>
+                        <td th:text="${solicitud.solicitante.legajo}">12345</td>
+                        <td th:text="${solicitud.solicitante.email}">email@example.com</td>
+                        <td>
+                            <span class="estado-pendiente" th:if="${solicitud.estado == T(ing.gpps.entity.Solicitud.EstadoSolicitud).PENDIENTE}">Pendiente</span>
+                            <span class="estado-aprobada" th:if="${solicitud.estado == T(ing.gpps.entity.Solicitud.EstadoSolicitud).APROBADA}">Aprobada</span>
+                            <span class="estado-rechazada" th:if="${solicitud.estado == T(ing.gpps.entity.Solicitud.EstadoSolicitud).RECHAZADA}">Rechazada</span>
+                        </td>
+                        <td>
+                            <button class="btn btn-aceptar" th:if="${solicitud.estado == T(ing.gpps.entity.Solicitud.EstadoSolicitud).PENDIENTE}"
+                                    th:onclick="'aprobarSolicitud(' + ${solicitud.id} + ')'">
+                                <i class="fas fa-check"></i> Aprobar
+                            </button>
+                            <button class="btn btn-rechazar" th:if="${solicitud.estado == T(ing.gpps.entity.Solicitud.EstadoSolicitud).PENDIENTE}"
+                                    th:onclick="'rechazarSolicitud(' + ${solicitud.id} + ')'">
+                                <i class="fas fa-times"></i> Rechazar
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        function aprobarSolicitud(id) {
+            fetch(`/direccion/solicitud/${id}/aprobar`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al aprobar la solicitud');
+                    }
+                    return response.blob();
+                })
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `convenio-${id}.pdf`;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    a.remove();
+                    
+                    // Redirigir al dashboard después de la descarga
+                    window.location.href = '/direccion/dashboard';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error al aprobar la solicitud: ' + error.message);
+                });
+        }
+
+        function rechazarSolicitud(id) {
+            if (confirm('¿Está seguro que desea rechazar esta solicitud?')) {
+                window.location.href = '/direccion/solicitud/' + id + '/rechazar';
+            }
+        }
+    </script>
+</body>
+</html> 
